@@ -1,0 +1,15 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [121.206083, 25.005417] },
+      "properties": { "name": "青塘園" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [121.218441, 25.021497] },
+      "properties": { "name": "橫山書法藝術公園" }
+    }
+  ]
+}

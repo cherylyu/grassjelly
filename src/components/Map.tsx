@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import locationsData from '@/data/locations.json';
 
-// Leaflet in Next.js requires this approach to fix icon broken issues.
+// Leaflet in Next.js requires this approach to fix icon broken issues
 const fixLeafletIcon = () => {
   delete (L.Icon.Default.prototype as any)._getIconUrl;
   L.Icon.Default.mergeOptions({
@@ -15,6 +16,23 @@ const fixLeafletIcon = () => {
   });
 };
 
+// Define GeoJSON related interfaces
+interface GeoJSONFeature {
+  type: string;
+  geometry: {
+    type: string;
+    coordinates: [number, number]; // longitude, latitude
+  };
+  properties: {
+    name: string;
+  };
+}
+
+interface GeoJSONData {
+  type: string;
+  features: GeoJSONFeature[];
+}
+
 interface MapProps {
   center: [number, number];
   zoom: number;
@@ -22,10 +40,12 @@ interface MapProps {
 
 const Map = ({ center, zoom }: MapProps) => {
   const [isMounted, setIsMounted] = useState(false);
+  const [locations, setLocations] = useState<GeoJSONData | null>(null);
 
   useEffect(() => {
     setIsMounted(true);
     fixLeafletIcon();
+    setLocations(locationsData as GeoJSONData);
   }, []);
 
   if (!isMounted) {
@@ -43,11 +63,22 @@ const Map = ({ center, zoom }: MapProps) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={center}>
-        <Popup>
-          You are here!
-        </Popup>
-      </Marker>
+
+      {locations && locations.features.map((feature, index) => {
+        // GeoJSON coordinates are [longitude, latitude], but Leaflet needs [latitude, longitude]
+        const position: [number, number] = [
+          feature.geometry.coordinates[1],
+          feature.geometry.coordinates[0]
+        ];
+
+        return (
+          <Marker key={index} position={position}>
+            <Popup>
+              {feature.properties.name}
+            </Popup>
+          </Marker>
+        );
+      })}
     </MapContainer>
   );
 };
