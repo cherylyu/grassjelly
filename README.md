@@ -1,17 +1,18 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Grassjelly
 
-## Getting Started
+This is an interactive map application built with Next.js, React, TypeScript, Leaflet, OpenStreetMap, and Tailwind CSS.
 
-First, run the development server:
+## Features
+- Interactive map display using Leaflet and OpenStreetMap
+- Map markers and popups
+- Responsive design, adaptable to different screen sizes
+
+## Quick Start
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
