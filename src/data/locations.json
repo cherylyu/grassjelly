@@ -3,13 +3,47 @@
   "features": [
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [121.206083, 25.005417] },
-      "properties": { "name": "青塘園" }
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.206083, 25.005417]
+      },
+      "properties": {
+        "name": "青塘園",
+        "type": "公園"
+      }
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [121.218441, 25.021497] },
-      "properties": { "name": "橫山書法藝術公園" }
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.218441, 25.021497]
+      },
+      "properties": {
+        "name": "橫山書法藝術公園",
+        "type": "公園"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.219937, 25.008655]
+      },
+      "properties": {
+        "name": "YouBike 站點 - 公七公園",
+        "type": "YouBike 站點"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.216255, 25.011905]
+      },
+      "properties": {
+        "name": "站前廣場",
+        "type": "無"
+      }
     }
   ]
 }

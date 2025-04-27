@@ -6,14 +6,47 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import locationsData from '@/data/locations.json';
 
-// Leaflet in Next.js requires this approach to fix icon broken issues
-const fixLeafletIcon = () => {
-  delete (L.Icon.Default.prototype as any)._getIconUrl;
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl: '/images/marker-icon-2x.png',
-    iconUrl: '/images/marker-icon.png',
-    shadowUrl: '/images/marker-shadow.png',
-  });
+// Custom icons based on location type
+const greenIcon = new L.Icon({
+  iconUrl: '/images/marker-icon-green.png',
+  iconRetinaUrl: '/images/marker-icon-2x-green.png',
+  shadowUrl: '/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+const goldIcon = new L.Icon({
+  iconUrl: '/images/marker-icon-gold.png',
+  iconRetinaUrl: '/images/marker-icon-2x-gold.png',
+  shadowUrl: '/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+const defaultIcon = new L.Icon({
+  iconUrl: '/images/marker-icon.png',
+  iconRetinaUrl: '/images/marker-icon-2x.png',
+  shadowUrl: '/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+// Get icon based on location type
+const getIconByType = (type: string): L.Icon => {
+  switch (type) {
+    case '公園':
+      return greenIcon;
+    case 'YouBike 站點':
+      return goldIcon;
+    default:
+      return defaultIcon;
+  }
 };
 
 // Define GeoJSON related interfaces
@@ -25,6 +58,7 @@ interface GeoJSONFeature {
   };
   properties: {
     name: string;
+    type: string;
   };
 }
 
@@ -44,7 +78,6 @@ const Map = ({ center, zoom }: MapProps) => {
 
   useEffect(() => {
     setIsMounted(true);
-    fixLeafletIcon();
     setLocations(locationsData as GeoJSONData);
   }, []);
 
@@ -73,8 +106,11 @@ const Map = ({ center, zoom }: MapProps) => {
           feature.geometry.coordinates[0]
         ];
 
+        // Get the appropriate icon based on location type
+        const icon = getIconByType(feature.properties.type);
+
         return (
-          <Marker key={index} position={position}>
+          <Marker key={index} position={position} icon={icon}>
             <Popup>
               {feature.properties.name}
             </Popup>
