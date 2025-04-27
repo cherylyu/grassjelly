@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import locationsData from '@/data/locations.json';
@@ -56,9 +56,11 @@ const Map = ({ center, zoom }: MapProps) => {
     <MapContainer
       center={center}
       zoom={zoom}
+      zoomControl={false}
       style={{ width: '100%', height: '100%' }}
       className="rounded-lg shadow-md"
     >
+      <ZoomControl position="bottomright" />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
