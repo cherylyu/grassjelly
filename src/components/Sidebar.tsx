@@ -1,22 +1,6 @@
 'use client';
 
-// Define GeoJSON related interfaces
-interface GeoJSONFeature {
-  type: string;
-  geometry: {
-    type: string;
-    coordinates: [number, number]; // longitude, latitude
-  };
-  properties: {
-    name: string;
-    type: string;
-  };
-}
-
-interface SidebarProps {
-  feature: GeoJSONFeature | null;
-  onClose: () => void;
-}
+import { SidebarProps } from '@/interfaces';
 
 const Sidebar = ({ feature, onClose }: SidebarProps) => {
   if (!feature) return null;

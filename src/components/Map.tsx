@@ -4,31 +4,9 @@ import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import locationsData from '@/data/locations.json';
+import { GeoJSONFeature, GeoJSONData, MapProps } from '@/interfaces';
 import { getIconByType } from '@/utils/mapIcons';
 import Sidebar from './Sidebar';
-
-// Define GeoJSON related interfaces
-interface GeoJSONFeature {
-  type: string;
-  geometry: {
-    type: string;
-    coordinates: [number, number]; // longitude, latitude
-  };
-  properties: {
-    name: string;
-    type: string;
-  };
-}
-
-interface GeoJSONData {
-  type: string;
-  features: GeoJSONFeature[];
-}
-
-interface MapProps {
-  center: [number, number];
-  zoom: number;
-}
 
 const Map = ({ center, zoom }: MapProps) => {
   const [isMounted, setIsMounted] = useState(false);
