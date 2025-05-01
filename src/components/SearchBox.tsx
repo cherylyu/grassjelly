@@ -16,6 +16,12 @@ const SearchBox = ({ locations, onSelectLocation }: SearchBoxProps) => {
     setShowResults(e.target.value.length > 0);
   };
 
+  const handleSearchFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Pre-select the input box for quicker text modification
+    e.target.select();
+    setShowResults(e.target.value.length > 0);
+  };
+
   const handleSelectLocation = (location: GeoJSONFeature) => {
     onSelectLocation(location);
     setSearchTerm(location.properties.name);
@@ -30,7 +36,7 @@ const SearchBox = ({ locations, onSelectLocation }: SearchBoxProps) => {
           placeholder="搜尋地點..."
           value={searchTerm}
           onChange={handleSearchChange}
-          onFocus={() => setShowResults(searchTerm.length > 0)}
+          onFocus={handleSearchFocus}
           className="w-full px-4 py-2 rounded-full bg-white/60 backdrop-blur-xs border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
         />
         {showResults && filteredLocations.length > 0 && (
