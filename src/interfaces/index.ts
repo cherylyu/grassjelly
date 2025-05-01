@@ -27,3 +27,9 @@ export interface SidebarProps {
   feature: GeoJSONFeature | null;
   onClose: () => void;
 }
+
+// Search box component interfaces
+export interface SearchBoxProps {
+  locations: GeoJSONFeature[] | null;
+  onSelectLocation: (feature: GeoJSONFeature) => void;
+}
