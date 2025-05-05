@@ -31,14 +31,22 @@ const SearchBox = ({ locations, onSelectLocation }: SearchBoxProps) => {
   return (
     <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-[1001] w-[300px]">
       <div className="relative">
-        <input
-          type="text"
-          placeholder="搜尋地點..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-          onFocus={handleSearchFocus}
-          className="w-full px-4 py-2 rounded-full bg-white/60 backdrop-blur-xs border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-        />
+        <div className="relative flex items-center">
+          <input
+            type="text"
+            placeholder="搜尋地點..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+            onFocus={handleSearchFocus}
+            className="w-full px-4 py-2 rounded-full bg-white/60 backdrop-blur-xs border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300 pr-10"
+          />
+          <button
+            className="absolute right-2 p-1.5 rounded-full bg-transparent hover:bg-black/10 focus:outline-none cursor-pointer duration-300 ease-in-out"
+            aria-label="篩選地點"
+          >
+            <img src="/images/filter.svg" alt="篩選" className="w-5 h-5" />
+          </button>
+        </div>
         {showResults && filteredLocations.length > 0 && (
           <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-md shadow-lg max-h-[200px] overflow-y-auto">
             {filteredLocations.map((location, index) => (
