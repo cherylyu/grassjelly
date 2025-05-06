@@ -100,9 +100,6 @@ const Map = ({ center, zoom }: MapProps) => {
                 }
               }}
             >
-              <Popup>
-                {feature.properties.name}
-              </Popup>
             </Marker>
           );
         })}
