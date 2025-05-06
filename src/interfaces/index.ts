@@ -25,7 +25,6 @@ export interface MapProps {
 // Sidebar component interfaces
 export interface SidebarProps {
   feature: GeoJSONFeature | null;
-  onClose: () => void;
 }
 
 // Search box component interfaces

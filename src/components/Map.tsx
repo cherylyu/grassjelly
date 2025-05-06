@@ -33,10 +33,6 @@ const Map = ({ center, zoom }: MapProps) => {
     }
   }, [searchedFeature]);
 
-  const handleCloseSidebar = () => {
-    setSelectedFeature(null);
-  };
-
   const handleSearchSelect = (feature: GeoJSONFeature) => {
     setSearchedFeature(feature);
     setSelectedFeature(feature);
@@ -57,7 +53,7 @@ const Map = ({ center, zoom }: MapProps) => {
 
   return (
     <>
-      <Sidebar feature={selectedFeature} onClose={handleCloseSidebar} />
+      <Sidebar feature={selectedFeature} />
       {locations && (
         <SearchBox
           locations={locations.features}
