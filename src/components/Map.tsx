@@ -1,20 +1,21 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import locationsData from '@/data/locations.json';
 import { GeoJSONFeature, GeoJSONData, MapProps } from '@/interfaces';
-import { getIconByType } from '@/utils/mapIcons';
 import Sidebar from './Sidebar';
 import SearchBox from './SearchBox';
+import './pulsatingMarker.css';
 
 const Map = ({ center, zoom }: MapProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [locations, setLocations] = useState<GeoJSONData | null>(null);
   const [selectedFeature, setSelectedFeature] = useState<GeoJSONFeature | null>(null);
   const [searchedFeature, setSearchedFeature] = useState<GeoJSONFeature | null>(null);
+  const [pulsatingMarkerId, setPulsatingMarkerId] = useState<string | null>(null);
   const mapRef = useRef<L.Map | null>(null);
 
   useEffect(() => {
@@ -38,15 +39,6 @@ const Map = ({ center, zoom }: MapProps) => {
     setSelectedFeature(feature);
   };
 
-  const MapClickHandler = () => {
-    useMapEvents({
-      click: () => {
-        setSelectedFeature(null);
-      }
-    });
-    return null;
-  };
-
   if (!isMounted) {
     return <div className="w-full h-full bg-gray-200 animate-pulse flex items-center justify-center">Loading map...</div>;
   }
@@ -68,7 +60,6 @@ const Map = ({ center, zoom }: MapProps) => {
         className="rounded-lg shadow-md"
         ref={mapRef}
       >
-        <MapClickHandler />
         <ZoomControl position="bottomright" />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -82,8 +73,16 @@ const Map = ({ center, zoom }: MapProps) => {
             feature.geometry.coordinates[0]
           ];
 
-          // Get the appropriate icon based on location type
-          const icon = getIconByType(feature.properties.type);
+          const isPulsating = pulsatingMarkerId === feature.properties.id;
+
+          const icon = L.divIcon({
+            className: '',
+            html: `<div class="marker-icon-wrapper ${isPulsating ? 'marker-pulse' : ''}">
+                    <img src="/images/marker-icon-${feature.properties.category || 'default'}.png" alt="Marker" width="25" height="41" />
+                  </div>`,
+            iconSize: [25, 41],
+            iconAnchor: [12, 41]
+          });
 
           return (
             <Marker
@@ -93,6 +92,7 @@ const Map = ({ center, zoom }: MapProps) => {
               eventHandlers={{
                 click: () => {
                   setSelectedFeature(feature);
+                  setPulsatingMarkerId(feature.properties.id);
                 }
               }}
             >

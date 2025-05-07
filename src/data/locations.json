@@ -8,8 +8,9 @@
         "coordinates": [121.206083, 25.005417]
       },
       "properties": {
+        "id": "50681eb9",
         "name": "青塘園",
-        "type": "公園"
+        "category": "park"
       }
     },
     {
@@ -19,8 +20,9 @@
         "coordinates": [121.218441, 25.021497]
       },
       "properties": {
+        "id": "0c286712",
         "name": "橫山書法藝術公園",
-        "type": "公園"
+        "category": "park"
       }
     },
     {
@@ -30,8 +32,9 @@
         "coordinates": [121.219937, 25.008655]
       },
       "properties": {
+        "id": "70bc188b",
         "name": "YouBike 站點 - 公七公園",
-        "type": "YouBike 站點"
+        "category": "youbike-station"
       }
     },
     {
@@ -41,8 +44,9 @@
         "coordinates": [121.216255, 25.011905]
       },
       "properties": {
+        "id": "0dda920a",
         "name": "站前廣場",
-        "type": "無"
+        "category": ""
       }
     }
   ]

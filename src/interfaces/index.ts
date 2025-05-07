@@ -6,8 +6,9 @@ export interface GeoJSONFeature {
     coordinates: [number, number]; // longitude, latitude
   };
   properties: {
+    id: string;
     name: string;
-    type: string;
+    category: string;
   };
 }
 

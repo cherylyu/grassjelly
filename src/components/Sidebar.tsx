@@ -19,7 +19,7 @@ const Sidebar = ({ feature }: SidebarProps) => {
             <h2 className="text-xl font-semibold">{feature.properties.name}</h2>
           </div>
           <div className="mt-4">
-            <p><strong>類型:</strong> {feature.properties.type || '未指定'}</p>
+            <p><strong>類型:</strong> {feature.properties.category || '未指定'}</p>
             <p><strong>座標:</strong> {feature.geometry.coordinates[1]}, {feature.geometry.coordinates[0]}</p>
           </div>
         </div>
