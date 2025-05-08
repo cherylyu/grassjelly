@@ -1,29 +1,98 @@
 'use client';
 
-import { SidebarProps } from '@/interfaces';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { SidebarProps, Category } from '@/interfaces';
 import Image from 'next/image';
+import categoriesData from '@/data/categories.json';
 
-const Sidebar = ({ feature }: SidebarProps) => {
-  const [collapsed, setCollapsed] = useState(true);
+const Sidebar = ({ onCategorySelect, selectedCategory }: SidebarProps) => {
+  const [collapsed, setCollapsed] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    setCategories(categoriesData as Category[]);
+  }, []);
+
+  const toggleCategory = (categoryId: string) => {
+    if (expandedCategories.includes(categoryId)) {
+      setExpandedCategories(expandedCategories.filter(id => id !== categoryId));
+    } else {
+      setExpandedCategories([...expandedCategories, categoryId]);
+    }
+  };
+
+  const handleCategorySelect = (categoryId: string) => {
+    if (onCategorySelect) {
+      onCategorySelect(categoryId);
+    }
+  };
+
+  const renderCategoryItem = (category: Category, categoryColor = 'transparent', level = 0) => {
+    const isExpanded = expandedCategories.includes(category.id);
+    const isSelected = selectedCategory === category.id;
+    const hasSubcategories = category.subcategories && category.subcategories.length > 0;
+
+    const iconStyle = {
+      marginLeft: `${level * 20}px`
+    };
+
+    return (
+      <div key={category.id}>
+        <div
+          className={`flex items-center py-2 rounded-sm cursor-pointer hover:bg-gray-100 ${
+            isSelected ? 'bg-gray-100' : ''
+          }`}
+          onClick={() => handleCategorySelect(category.id)}
+        >
+          <div className="flex items-center" style={iconStyle}>
+            {hasSubcategories ? (
+              <span
+                className="w-5 h-5 mx-1 flex items-center justify-center cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleCategory(category.id);
+                }}
+              >
+                {isExpanded ? '▼' : '►'}
+              </span>
+            ) : (
+              <div className="w-5 h-5 mx-1"></div>
+            )}
+
+            <div className={`${ level === 0 ? 'w-5' : 'w-1'} h-5 mr-2 flex-shrink-0`}
+              style={{
+                backgroundColor: categoryColor,
+                borderRadius: '2px'
+              }}
+            ></div>
+
+            <span className="text-sm">{category.name}</span>
+          </div>
+        </div>
+
+        {isExpanded && hasSubcategories && (
+          <div className="subcategories">
+            {category.subcategories?.map(subCategory =>
+              renderCategoryItem(subCategory, category.color, level + 1)
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div
-      className={`fixed top-0 left-[80px] h-full w-[320px] bg-white shadow-lg z-500 transition-all duration-300 ease-in-out ${
-        collapsed ? 'transform -translate-x-[320px]' : ''
+      className={`fixed top-0 left-[80px] h-full w-[300px] p-4 bg-white shadow-lg z-500 transition-all duration-300 ease-in-out ${
+        collapsed ? 'transform -translate-x-[300px]' : ''
       }`}
     >
-      {feature && (
-        <div className="p-4">
-          <div className="flex justify-between items-center pb-4 border-b">
-            <h2 className="text-xl font-semibold">{feature.properties.name}</h2>
-          </div>
-          <div className="mt-4">
-            <p><strong>類型:</strong> {feature.properties.category || '未指定'}</p>
-            <p><strong>座標:</strong> {feature.geometry.coordinates[1]}, {feature.geometry.coordinates[0]}</p>
-          </div>
-        </div>
-      )}
+      <h2 className="text-md font-medium">類別</h2>
+
+      <div className="category-tree py-2">
+        {categories.map(category => renderCategoryItem(category, category.color))}
+      </div>
 
       <button
         onClick={() => setCollapsed(!collapsed)}

@@ -25,7 +25,16 @@ export interface MapProps {
 
 // Sidebar component interfaces
 export interface SidebarProps {
-  feature: GeoJSONFeature | null;
+  onCategorySelect?: (categoryId: string) => void;
+  selectedCategory?: string;
+}
+
+// Category interfaces
+export interface Category {
+  id: string;
+  name: string;
+  color: string;
+  subcategories?: Category[];
 }
 
 // Search box component interfaces
