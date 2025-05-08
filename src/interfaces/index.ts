@@ -9,6 +9,11 @@ export interface GeoJSONFeature {
     id: string;
     name: string;
     category: string;
+    description: string;
+    address: string;
+    phone: string;
+    website: string;
+    glink: string;
   };
 }
 
