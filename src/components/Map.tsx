@@ -16,6 +16,7 @@ const Map = ({ center, zoom }: MapProps) => {
 
   const [isMounted, setIsMounted] = useState(false);
   const [locations, setLocations] = useState<GeoJSONData | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedFeature, setSelectedFeature] = useState<GeoJSONFeature | null>(null);
   const [searchedFeature, setSearchedFeature] = useState<GeoJSONFeature | null>(null);
   const [pulsatingMarkerId, setPulsatingMarkerId] = useState<string | null>(null);
@@ -38,6 +39,10 @@ const Map = ({ center, zoom }: MapProps) => {
     }
   }, [searchedFeature]);
 
+  const handleCategorySelect = (categoryId: string) => {
+    setSelectedCategory(categoryId);
+  };
+
   const handleSearchSelect = (feature: GeoJSONFeature) => {
     setSearchedFeature(feature);
     setSelectedFeature(feature);
@@ -49,7 +54,10 @@ const Map = ({ center, zoom }: MapProps) => {
 
   return (
     <>
-      <Sidebar onCategorySelect={(id) => console.log('類別選擇:', id)} />
+      <Sidebar
+        selectedCategory={selectedCategory}
+        onCategorySelect={handleCategorySelect}
+      />
       {locations && (
         <SearchBox
           locations={locations.features}
