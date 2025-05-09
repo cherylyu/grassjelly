@@ -73,3 +73,17 @@
 .popup-link:hover {
   text-decoration: underline;
 }
+
+.popup-toggle-description {
+  display: inline-block;
+  color: #3498db;
+  text-decoration: none;
+  margin-left: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.popup-toggle-description:hover {
+  text-decoration: underline;
+}

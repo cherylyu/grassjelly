@@ -12,11 +12,14 @@ import './pulsatingMarker.css';
 import './customPopup.css';
 
 const Map = ({ center, zoom }: MapProps) => {
+  const DESCRIPTION_CHAR_LIMIT = 52;
+
   const [isMounted, setIsMounted] = useState(false);
   const [locations, setLocations] = useState<GeoJSONData | null>(null);
   const [selectedFeature, setSelectedFeature] = useState<GeoJSONFeature | null>(null);
   const [searchedFeature, setSearchedFeature] = useState<GeoJSONFeature | null>(null);
   const [pulsatingMarkerId, setPulsatingMarkerId] = useState<string | null>(null);
+  const [expandedDescriptions, setExpandedDescriptions] = useState<Record<string, boolean>>({});
   const mapRef = useRef<L.Map | null>(null);
 
   useEffect(() => {
@@ -105,7 +108,41 @@ const Map = ({ center, zoom }: MapProps) => {
                   </div>
                   <div className="popup-body">
                     {feature.properties.description && (
-                      <div className="popup-description">{feature.properties.description}</div>
+                      <div className="popup-description">
+                        {feature.properties.description.length > DESCRIPTION_CHAR_LIMIT && !expandedDescriptions[feature.properties.id] ? (
+                          <>
+                            {feature.properties.description.substring(0, DESCRIPTION_CHAR_LIMIT)}...
+                            <a
+                              href="#"
+                              className="popup-toggle-description"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setExpandedDescriptions(prev => ({ ...prev, [feature.properties.id]: true }));
+                              }}
+                            >
+                              顯示更多
+                            </a>
+                          </>
+                        ) : (
+                          <>
+                            {feature.properties.description}
+                            {feature.properties.description.length > DESCRIPTION_CHAR_LIMIT && (
+                              <a
+                                href="#"
+                                className="popup-toggle-description"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setExpandedDescriptions(prev => ({ ...prev, [feature.properties.id]: false }));
+                                }}
+                              >
+                                顯示較少
+                              </a>
+                            )}
+                          </>
+                        )}
+                      </div>
                     )}
 
                     {feature.properties.address && (
