@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { MapContainer, TileLayer, Marker, ZoomControl } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import locationsData from '@/data/locations.json';
@@ -9,6 +9,7 @@ import { GeoJSONFeature, GeoJSONData, MapProps } from '@/interfaces';
 import Sidebar from './Sidebar';
 import SearchBox from './SearchBox';
 import './pulsatingMarker.css';
+import './customPopup.css';
 
 const Map = ({ center, zoom }: MapProps) => {
   const [isMounted, setIsMounted] = useState(false);
@@ -45,7 +46,7 @@ const Map = ({ center, zoom }: MapProps) => {
 
   return (
     <>
-      <Sidebar feature={selectedFeature} />
+      <Sidebar onCategorySelect={(id) => console.log('類別選擇:', id)} />
       {locations && (
         <SearchBox
           locations={locations.features}
@@ -81,7 +82,8 @@ const Map = ({ center, zoom }: MapProps) => {
                     <img src="/images/marker-icon-${feature.properties.category || 'default'}.png" alt="Marker" width="25" height="41" />
                   </div>`,
             iconSize: [25, 41],
-            iconAnchor: [12, 41]
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34]
           });
 
           return (
@@ -96,6 +98,50 @@ const Map = ({ center, zoom }: MapProps) => {
                 }
               }}
             >
+              <Popup className="custom-popup">
+                <div className="popup-container">
+                  <div className="popup-header">
+                    <h3 className="popup-title">{feature.properties.name}</h3>
+                  </div>
+                  <div className="popup-body">
+                    {feature.properties.description && (
+                      <div className="popup-description">{feature.properties.description}</div>
+                    )}
+
+                    {feature.properties.address && (
+                      <div className="popup-info-row">
+                        <img src="/images/popup-icon-building.svg" alt="地址" className="popup-icon" />
+                        <span className="popup-text">{feature.properties.address}</span>
+                      </div>
+                    )}
+
+                    {feature.properties.phone && (
+                      <div className="popup-info-row">
+                        <img src="/images/popup-icon-phone.svg" alt="電話" className="popup-icon" />
+                        <span className="popup-text">{feature.properties.phone}</span>
+                      </div>
+                    )}
+
+                    {feature.properties.website && (
+                      <div className="popup-info-row">
+                        <img src="/images/popup-icon-global.svg" alt="網站" className="popup-icon" />
+                        <a href={feature.properties.website} target="_blank" rel="noopener noreferrer" className="popup-text popup-link">
+                          {feature.properties.website}
+                        </a>
+                      </div>
+                    )}
+
+                    {feature.properties.glink && (
+                      <div className="popup-info-row">
+                        <img src="/images/popup-icon-google.svg" alt="Google 地圖" className="popup-icon" />
+                        <a href={feature.properties.glink} target="_blank" rel="noopener noreferrer" className="popup-text popup-link">
+                          在 Google 地圖中開啟
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </Popup>
             </Marker>
           );
         })}
