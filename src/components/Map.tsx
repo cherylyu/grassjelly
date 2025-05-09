@@ -5,7 +5,8 @@ import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from 'react-leafl
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import locationsData from '@/data/locations.json';
-import { GeoJSONFeature, GeoJSONData, MapProps } from '@/interfaces';
+import categoriesData from '@/data/categories.json';
+import { GeoJSONFeature, GeoJSONData, MapProps, Category } from '@/interfaces';
 import Sidebar from './Sidebar';
 import SearchBox from './SearchBox';
 import './pulsatingMarker.css';
@@ -21,11 +22,13 @@ const Map = ({ center, zoom }: MapProps) => {
   const [searchedFeature, setSearchedFeature] = useState<GeoJSONFeature | null>(null);
   const [pulsatingMarkerId, setPulsatingMarkerId] = useState<string | null>(null);
   const [expandedDescriptions, setExpandedDescriptions] = useState<Record<string, boolean>>({});
+  const [categories, setCategories] = useState<Category[]>([]);
   const mapRef = useRef<L.Map | null>(null);
 
   useEffect(() => {
     setIsMounted(true);
     setLocations(locationsData as GeoJSONData);
+    setCategories(categoriesData as Category[]);
   }, []);
 
   // Monitor `searchedFeature` state and control the map center movement
@@ -46,6 +49,39 @@ const Map = ({ center, zoom }: MapProps) => {
   const handleSearchSelect = (feature: GeoJSONFeature) => {
     setSearchedFeature(feature);
     setSelectedFeature(feature);
+  };
+
+  const isInSelectedCategory = (featureCategoryId: string, categoryId: string): boolean => {
+    // Get the selected category object
+    const findCategoryById = (categories: Category[], id: string): Category | null => {
+      for (const category of categories) {
+        if (category.id === id) return category;
+        if (category.subcategories) {
+          const found = findCategoryById(category.subcategories, id);
+          if (found) return found;
+        }
+      }
+      return null;
+    };
+
+    // Get IDs of the selected category and all its subcategories
+    const getAllCategoryIds = (category: Category): string[] => {
+      const ids = [category.id];
+      if (category.subcategories) {
+        category.subcategories.forEach(sub => {
+          ids.push(...getAllCategoryIds(sub));
+        });
+      }
+      return ids;
+    };
+
+    if (!categoryId) return true;
+
+    const selectedCategoryObj = findCategoryById(categories, categoryId);
+    if (!selectedCategoryObj) return false;
+
+    const selectedCategoryIds = getAllCategoryIds(selectedCategoryObj);
+    return selectedCategoryIds.includes(featureCategoryId);
   };
 
   if (!isMounted) {
@@ -78,7 +114,9 @@ const Map = ({ center, zoom }: MapProps) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {locations && locations.features.map((feature, index) => {
+        {locations && locations.features
+          .filter(feature => isInSelectedCategory(feature.properties.category, selectedCategory || ''))
+          .map((feature, index) => {
           // GeoJSON coordinates are [longitude, latitude], but Leaflet needs [latitude, longitude]
           const position: [number, number] = [
             feature.geometry.coordinates[1],
