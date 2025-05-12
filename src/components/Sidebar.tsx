@@ -28,19 +28,21 @@ const Sidebar = ({ onCategorySelect, selectedCategory }: SidebarProps) => {
     }
   };
 
-  const renderCategoryItem = (category: Category, categoryColor = 'transparent', level = 0) => {
+  const renderCategoryItem = (category: Category, categoryColor = 'transparent', parentCategory = null, level = 0) => {
     const isExpanded = expandedCategories.includes(category.id);
-    const isSelected = selectedCategory === category.id;
+    const isSelected = selectedCategory === category.id ||
+      (parentCategory && selectedCategory === parentCategory) ||
+      selectedCategory === 'all';
     const hasSubcategories = category.subcategories && category.subcategories.length > 0;
 
     const iconStyle = {
-      marginLeft: `${level * 25}px`
+      marginLeft: `${level * 28}px`
     };
 
     return (
       <div key={category.id} className="category-item">
         <div
-          className={`flex items-center py-2 rounded-sm cursor-pointer hover:bg-gray-100 ${
+          className={`flex items-center py-2 cursor-pointer hover:bg-gray-100 ${
             isSelected ? 'bg-gray-100' : ''
           }`}
           onClick={() => handleCategorySelect(category.id)}
@@ -48,16 +50,15 @@ const Sidebar = ({ onCategorySelect, selectedCategory }: SidebarProps) => {
           <div className="flex items-center" style={iconStyle}>
             {hasSubcategories ? (
               <span
-                className="w-5 h-5 mx-1 flex items-center justify-center cursor-pointer"
+                className={`category-expand-toggle w-5 h-5 mx-2 flex items-center justify-center cursor-pointer duration-300 ease-in-out ${isExpanded ? 'rotate-90' : ''}`}
                 onClick={(e) => {
                   e.stopPropagation();
                   toggleCategory(category.id);
                 }}
               >
-                {isExpanded ? '▼' : '►'}
               </span>
             ) : (
-              <div className="w-5 h-5 mx-1"></div>
+              <div className="w-5 h-5 mx-2"></div>
             )}
 
             <div className={`w-5 h-5 mr-2 flex-shrink-0 rounded-xs checkbox ${level > 0 ? 'opacity-70' : ''} ${isSelected ? 'checked' : ''}`}
@@ -71,7 +72,7 @@ const Sidebar = ({ onCategorySelect, selectedCategory }: SidebarProps) => {
         {isExpanded && hasSubcategories && (
           <div className="subcategories">
             {category.subcategories?.map(subCategory =>
-              renderCategoryItem(subCategory, category.color, level + 1)
+              renderCategoryItem(subCategory, category.color, category.id, level + 1)
             )}
           </div>
         )}
@@ -90,12 +91,12 @@ const Sidebar = ({ onCategorySelect, selectedCategory }: SidebarProps) => {
       <div className="category-tree py-2 text-sm">
         <div className="category-item">
           <div
-            className={`flex items-center py-2 rounded-sm cursor-pointer hover:bg-gray-100 ${
+            className={`flex items-center py-2 cursor-pointer hover:bg-gray-100 ${
               selectedCategory === 'all' ? 'bg-gray-100' : ''
             }`}
             onClick={() => handleCategorySelect('all')}
           >
-            <span className="w-5 h-5 mx-1"></span>
+            <span className="mx-1"></span>
             <div className={`w-5 h-5 mr-2 flex-shrink-0 rounded-xs checkbox bg-gray-400 ${selectedCategory === 'all' ? 'checked' : ''}`}></div>
             <span>全部類別</span>
           </div>

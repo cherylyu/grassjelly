@@ -3,3 +3,9 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.category-expand-toggle {
+  background-image: url(/images/arrow-right.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
