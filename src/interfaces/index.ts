@@ -31,7 +31,7 @@ export interface MapProps {
 // Sidebar component interfaces
 export interface SidebarProps {
   selectedCategory: string | null;
-  onCategorySelect: (categoryId: string) => void;
+  onCategorySelect: (categoryId: string | null) => void;
 }
 
 // Category interfaces

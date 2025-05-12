@@ -9,15 +9,16 @@ import categoriesData from '@/data/categories.json';
 import { GeoJSONFeature, GeoJSONData, MapProps, Category } from '@/interfaces';
 import Sidebar from './Sidebar';
 import SearchBox from './SearchBox';
-import './pulsatingMarker.css';
+import './common.css';
 import './customPopup.css';
+import './pulsatingMarker.css';
 
 const Map = ({ center, zoom }: MapProps) => {
   const DESCRIPTION_CHAR_LIMIT = 52;
 
   const [isMounted, setIsMounted] = useState(false);
   const [locations, setLocations] = useState<GeoJSONData | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>('all');
   const [selectedFeature, setSelectedFeature] = useState<GeoJSONFeature | null>(null);
   const [searchedFeature, setSearchedFeature] = useState<GeoJSONFeature | null>(null);
   const [pulsatingMarkerId, setPulsatingMarkerId] = useState<string | null>(null);
@@ -42,7 +43,7 @@ const Map = ({ center, zoom }: MapProps) => {
     }
   }, [searchedFeature]);
 
-  const handleCategorySelect = (categoryId: string) => {
+  const handleCategorySelect = (categoryId: string | null) => {
     setSelectedCategory(categoryId);
   };
 
@@ -51,7 +52,10 @@ const Map = ({ center, zoom }: MapProps) => {
     setSelectedFeature(feature);
   };
 
-  const isInSelectedCategory = (featureCategoryId: string, categoryId: string): boolean => {
+  const isInSelectedCategory = (featureCategoryId: string, categoryId: string | null): boolean => {
+    if (categoryId === 'all') return true;
+    if (!categoryId) return false;
+
     // Get the selected category object
     const findCategoryById = (categories: Category[], id: string): Category | null => {
       for (const category of categories) {
@@ -74,8 +78,6 @@ const Map = ({ center, zoom }: MapProps) => {
       }
       return ids;
     };
-
-    if (!categoryId) return true;
 
     const selectedCategoryObj = findCategoryById(categories, categoryId);
     if (!selectedCategoryObj) return false;

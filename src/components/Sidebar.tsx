@@ -22,9 +22,9 @@ const Sidebar = ({ onCategorySelect, selectedCategory }: SidebarProps) => {
     }
   };
 
-  const handleCategorySelect = (categoryId: string) => {
+  const handleCategorySelect = (categoryId: string | null) => {
     if (onCategorySelect) {
-      onCategorySelect(categoryId);
+      onCategorySelect(selectedCategory === categoryId ? null : categoryId);
     }
   };
 
@@ -38,7 +38,7 @@ const Sidebar = ({ onCategorySelect, selectedCategory }: SidebarProps) => {
     };
 
     return (
-      <div key={category.id}>
+      <div key={category.id} className="category-item">
         <div
           className={`flex items-center py-2 rounded-sm cursor-pointer hover:bg-gray-100 ${
             isSelected ? 'bg-gray-100' : ''
@@ -60,14 +60,11 @@ const Sidebar = ({ onCategorySelect, selectedCategory }: SidebarProps) => {
               <div className="w-5 h-5 mx-1"></div>
             )}
 
-            <div className={`w-5 h-5 mr-2 flex-shrink-0 ${level > 0 ? 'opacity-70' : ''}`}
-              style={{
-                backgroundColor: categoryColor,
-                borderRadius: '2px'
-              }}
+            <div className={`w-5 h-5 mr-2 flex-shrink-0 rounded-xs checkbox ${level > 0 ? 'opacity-70' : ''} ${isSelected ? 'checked' : ''}`}
+              style={{ backgroundColor: categoryColor }}
             ></div>
 
-            <span className="text-sm">{category.name}</span>
+            <span>{category.name}</span>
           </div>
         </div>
 
@@ -90,7 +87,20 @@ const Sidebar = ({ onCategorySelect, selectedCategory }: SidebarProps) => {
     >
       <h2 className="text-md font-medium">類別</h2>
 
-      <div className="category-tree py-2">
+      <div className="category-tree py-2 text-sm">
+        <div className="category-item">
+          <div
+            className={`flex items-center py-2 rounded-sm cursor-pointer hover:bg-gray-100 ${
+              selectedCategory === 'all' ? 'bg-gray-100' : ''
+            }`}
+            onClick={() => handleCategorySelect('all')}
+          >
+            <span className="w-5 h-5 mx-1"></span>
+            <div className={`w-5 h-5 mr-2 flex-shrink-0 rounded-xs checkbox bg-gray-400 ${selectedCategory === 'all' ? 'checked' : ''}`}></div>
+            <span>全部類別</span>
+          </div>
+        </div>
+
         {categories.map(category => renderCategoryItem(category, category.color))}
       </div>
 
