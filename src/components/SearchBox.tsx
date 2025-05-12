@@ -71,13 +71,13 @@ const SearchBox = ({ locations, onSelectLocation }: SearchBoxProps) => {
             onChange={handleSearchChange}
             onFocus={handleSearchFocus}
             onKeyDown={handleKeyDown}
-            className="w-full px-4 py-2 rounded-full bg-white/60 backdrop-blur-xs border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300 pr-10"
+            className="w-full px-4 py-2 pr-10 rounded-md bg-white/60 backdrop-blur-md border border-gray-300 shadow-md hover:border-gray-400 focus:outline-none focus:border-emerald-400 focus:ring focus:ring-emerald-400 duration-300 ease-in-out"
           />
           <button
-            className="absolute right-2 p-1.5 rounded-full bg-transparent hover:bg-black/10 focus:outline-none cursor-pointer duration-300 ease-in-out"
+            className="absolute right-2 p-1.5 rounded-md bg-transparent hover:bg-black/5 focus:outline-none cursor-pointer duration-300 ease-in-out"
             aria-label="篩選地點"
           >
-            <img src="/images/filter.svg" alt="篩選" className="w-5 h-5" />
+            <img src="/images/search.svg" alt="搜尋" className="w-5 h-5" />
           </button>
         </div>
         {showResults && filteredLocations.length > 0 && (
@@ -87,7 +87,7 @@ const SearchBox = ({ locations, onSelectLocation }: SearchBoxProps) => {
                 key={index}
                 className={`px-4 py-2 cursor-pointer ${
                   index === selectedIndex
-                    ? 'bg-blue-100 font-medium'
+                    ? 'bg-emerald-400 text-white font-medium'
                     : 'hover:bg-gray-100'
                 }`}
                 onClick={() => handleSelectLocation(location)}

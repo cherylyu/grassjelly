@@ -34,7 +34,7 @@ const Sidebar = ({ onCategorySelect, selectedCategory }: SidebarProps) => {
     const hasSubcategories = category.subcategories && category.subcategories.length > 0;
 
     const iconStyle = {
-      marginLeft: `${level * 20}px`
+      marginLeft: `${level * 25}px`
     };
 
     return (
@@ -60,7 +60,7 @@ const Sidebar = ({ onCategorySelect, selectedCategory }: SidebarProps) => {
               <div className="w-5 h-5 mx-1"></div>
             )}
 
-            <div className={`${ level === 0 ? 'w-5' : 'w-1'} h-5 mr-2 flex-shrink-0`}
+            <div className={`w-5 h-5 mr-2 flex-shrink-0 ${level > 0 ? 'opacity-70' : ''}`}
               style={{
                 backgroundColor: categoryColor,
                 borderRadius: '2px'
