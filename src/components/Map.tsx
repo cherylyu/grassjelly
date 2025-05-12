@@ -23,6 +23,7 @@ const Map = ({ center, zoom }: MapProps) => {
   const [pulsatingMarkerId, setPulsatingMarkerId] = useState<string | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const mapRef = useRef<L.Map | null>(null);
+  const markerRefs = useRef<Record<string, L.Marker | null>>({});
 
   useEffect(() => {
     setIsMounted(true);
@@ -30,7 +31,7 @@ const Map = ({ center, zoom }: MapProps) => {
     setCategories(categoriesData as Category[]);
   }, []);
 
-  // Monitor `searchedFeature` state and control the map center movement
+  // Monitor `searchedFeature` state and control the map center movement and popup display
   useEffect(() => {
     if (searchedFeature && mapRef.current) {
       const position: [number, number] = [
@@ -38,6 +39,16 @@ const Map = ({ center, zoom }: MapProps) => {
         searchedFeature.geometry.coordinates[0]
       ];
       mapRef.current.flyTo(position, zoom);
+
+      const markerId = searchedFeature.properties.id;
+      const marker = markerRefs.current[markerId];
+      if (marker) {
+        setTimeout(() => {
+          marker.openPopup();
+          setSelectedFeature(searchedFeature);
+          setPulsatingMarkerId(searchedFeature.properties.id);
+        }, 300); // Short delay to ensure the map has moved to the position
+      }
     }
   }, [searchedFeature]);
 
@@ -140,6 +151,9 @@ const Map = ({ center, zoom }: MapProps) => {
               key={index}
               position={position}
               icon={icon}
+              ref={(marker) => {
+                markerRefs.current[feature.properties.id] = marker;
+              }}
               eventHandlers={{
                 click: () => {
                   setSelectedFeature(feature);
