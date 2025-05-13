@@ -28,10 +28,15 @@ const Sidebar = ({ onCategorySelect, selectedCategory }: SidebarProps) => {
     }
   };
 
-  const renderCategoryItem = (category: Category, categoryColor = 'transparent', parentCategory = null, level = 0) => {
+  const renderCategoryItem = (
+    category: Category,
+    categoryColor: string = 'transparent',
+    parentCategory: string = '',
+    level: number = 0
+  ) => {
     const isExpanded = expandedCategories.includes(category.id);
     const isSelected = selectedCategory === category.id ||
-      (parentCategory && selectedCategory === parentCategory) ||
+      selectedCategory === parentCategory ||
       selectedCategory === 'all';
     const hasSubcategories = category.subcategories && category.subcategories.length > 0;
 

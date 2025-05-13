@@ -55,9 +55,13 @@ const Map = ({ center, zoom }: MapProps) => {
   };
 
   const handleSearchSelect = (feature: GeoJSONFeature) => {
-    setSearchedFeature(feature);
-    setSelectedFeature(feature);
-    moveToLocation(feature);
+    setSelectedCategory('all');
+
+    setTimeout(() => {
+      setSearchedFeature(feature);
+      setSelectedFeature(feature);
+      moveToLocation(feature);
+    }, 100); // Short delay to ensure the markers have been rendered
   };
 
   const isInSelectedCategory = (featureCategoryId: string, categoryId: string | null): boolean => {
