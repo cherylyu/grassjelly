@@ -31,26 +31,24 @@ const Map = ({ center, zoom }: MapProps) => {
     setCategories(categoriesData as Category[]);
   }, []);
 
-  // Monitor `searchedFeature` state and control the map center movement and popup display
-  useEffect(() => {
-    if (searchedFeature && mapRef.current) {
+  const moveToLocation = (feature: GeoJSONFeature) => {
+    if (mapRef.current) {
       const position: [number, number] = [
-        searchedFeature.geometry.coordinates[1],
-        searchedFeature.geometry.coordinates[0]
+        feature.geometry.coordinates[1],
+        feature.geometry.coordinates[0]
       ];
       mapRef.current.flyTo(position, zoom);
 
-      const markerId = searchedFeature.properties.id;
+      const markerId = feature.properties.id;
       const marker = markerRefs.current[markerId];
       if (marker) {
         setTimeout(() => {
           marker.openPopup();
-          setSelectedFeature(searchedFeature);
-          setPulsatingMarkerId(searchedFeature.properties.id);
+          setPulsatingMarkerId(feature.properties.id);
         }, 300); // Short delay to ensure the map has moved to the position
       }
     }
-  }, [searchedFeature]);
+  };
 
   const handleCategorySelect = (categoryId: string | null) => {
     setSelectedCategory(categoryId);
@@ -59,6 +57,7 @@ const Map = ({ center, zoom }: MapProps) => {
   const handleSearchSelect = (feature: GeoJSONFeature) => {
     setSearchedFeature(feature);
     setSelectedFeature(feature);
+    moveToLocation(feature);
   };
 
   const isInSelectedCategory = (featureCategoryId: string, categoryId: string | null): boolean => {
