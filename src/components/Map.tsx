@@ -34,7 +34,7 @@ const Map = ({ center, zoom }: MapProps) => {
   const moveToLocation = (feature: GeoJSONFeature) => {
     if (mapRef.current) {
       const position: [number, number] = [
-        feature.geometry.coordinates[1],
+        feature.geometry.coordinates[1] + 0.002, // Adjusted for better centering
         feature.geometry.coordinates[0]
       ];
       mapRef.current.flyTo(position, zoom);
@@ -119,7 +119,6 @@ const Map = ({ center, zoom }: MapProps) => {
         zoom={zoom}
         zoomControl={false}
         style={{ width: '100%', height: '100%' }}
-        className="rounded-lg shadow-md"
         ref={mapRef}
       >
         <ZoomControl position="bottomright" />

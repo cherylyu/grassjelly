@@ -62,7 +62,7 @@ const SearchBox = ({ locations, onSelectLocation }: SearchBoxProps) => {
 
   return (
     <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-[1001] w-[300px]">
-      <div className="relative">
+      <div className="relative left-[40px]">
         <div className="relative flex items-center">
           <input
             type="text"
@@ -73,12 +73,9 @@ const SearchBox = ({ locations, onSelectLocation }: SearchBoxProps) => {
             onKeyDown={handleKeyDown}
             className="w-full px-4 py-2 pr-10 rounded-md bg-white/60 backdrop-blur-md border border-gray-300 shadow-md hover:border-gray-400 focus:outline-none focus:border-emerald-400 focus:ring focus:ring-emerald-400 duration-300 ease-in-out"
           />
-          <button
-            className="absolute right-2 p-1.5 rounded-md bg-transparent hover:bg-black/5 focus:outline-none cursor-pointer duration-300 ease-in-out"
-            aria-label="篩選地點"
-          >
+          <span className="absolute right-2 p-1.5 rounded-md bg-transparent">
             <img src="/images/search.svg" alt="搜尋" className="w-5 h-5" />
-          </button>
+          </span>
         </div>
         {showResults && filteredLocations.length > 0 && (
           <ul className="absolute top-full left-0 right-0 mt-1 bg-white rounded-md shadow-lg max-h-[200px] overflow-y-auto">

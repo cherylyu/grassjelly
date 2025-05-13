@@ -65,9 +65,9 @@
   word-break: break-all;
 }
 
-.popup-link {
-  color: #3498db;
-  text-decoration: none;
+.custom-popup .popup-link,
+.custom-popup .popup-toggle-description {
+  color: var(--color-cyan-500);
 }
 
 .popup-link:hover {
@@ -76,10 +76,8 @@
 
 .popup-toggle-description {
   display: inline-block;
-  color: #3498db;
   text-decoration: none;
   margin-left: 4px;
-  font-size: 12px;
   cursor: pointer;
   white-space: nowrap;
 }
