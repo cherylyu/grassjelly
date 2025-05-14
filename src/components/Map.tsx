@@ -4,7 +4,6 @@ import { useEffect, useState, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import locationsData from '@/data/locations.json';
 import categoriesData from '@/data/categories.json';
 import { GeoJSONFeature, GeoJSONData, MapProps, Category } from '@/interfaces';
 import CustomPopup from './CustomPopup';
@@ -22,12 +21,34 @@ const Map = ({ center, zoom }: MapProps) => {
   const [searchedFeature, setSearchedFeature] = useState<GeoJSONFeature | null>(null);
   const [pulsatingMarkerId, setPulsatingMarkerId] = useState<string | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const mapRef = useRef<L.Map | null>(null);
   const markerRefs = useRef<Record<string, L.Marker | null>>({});
 
   useEffect(() => {
     setIsMounted(true);
-    setLocations(locationsData as GeoJSONData);
+
+    const fetchLocations = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch('/api/locations');
+
+        if (!response.ok) {
+          throw new Error(`取得地點資料時發生錯誤: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setLocations(data as GeoJSONData);
+      } catch (err) {
+        console.error('取得地點資料失敗:', err);
+        setError(err instanceof Error ? err.message : '取得地點資料時發生未知錯誤');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchLocations();
     setCategories(categoriesData as Category[]);
   }, []);
 
@@ -98,8 +119,12 @@ const Map = ({ center, zoom }: MapProps) => {
     return selectedCategoryIds.includes(featureCategoryId);
   };
 
-  if (!isMounted) {
+  if (!isMounted || isLoading) {
     return <div className="w-full h-full bg-gray-200 animate-pulse flex items-center justify-center">Loading map...</div>;
+  }
+
+  if (error) {
+    return <div className="w-full h-full flex items-center justify-center bg-red-100 text-red-500">{error}</div>;
   }
 
   return (
