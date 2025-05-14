@@ -4,7 +4,6 @@ import { useEffect, useState, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import categoriesData from '@/data/categories.json';
 import { GeoJSONFeature, GeoJSONData, MapProps, Category } from '@/interfaces';
 import CustomPopup from './CustomPopup';
 import SearchBox from './SearchBox';
@@ -31,7 +30,6 @@ const Map = ({ center, zoom }: MapProps) => {
 
     const fetchLocations = async () => {
       try {
-        setIsLoading(true);
         const response = await fetch('/api/locations');
 
         if (!response.ok) {
@@ -43,13 +41,35 @@ const Map = ({ center, zoom }: MapProps) => {
       } catch (err) {
         console.error('取得地點資料失敗:', err);
         setError(err instanceof Error ? err.message : '取得地點資料時發生未知錯誤');
+      }
+    };
+
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('/api/categories');
+
+        if (!response.ok) {
+          throw new Error(`取得類別資料時發生錯誤: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setCategories(data as Category[]);
+      } catch (err) {
+        console.error('取得類別資料失敗:', err);
+        setError(err instanceof Error ? err.message : '取得類別資料時發生未知錯誤');
+      }
+    };
+
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        await Promise.all([fetchLocations(), fetchCategories()]);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchLocations();
-    setCategories(categoriesData as Category[]);
+    fetchData();
   }, []);
 
   const moveToLocation = (feature: GeoJSONFeature) => {
