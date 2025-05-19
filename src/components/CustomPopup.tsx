@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Popup } from 'react-leaflet';
+import Image from 'next/image';
 import { GeoJSONFeature } from '@/interfaces';
 
 interface CustomPopupProps {
@@ -60,21 +61,21 @@ const CustomPopup = ({ feature }: CustomPopupProps) => {
 
           {feature.properties.address && (
             <div className="popup-info-row">
-              <img src="/images/popup-icon-building.svg" alt="地址" className="popup-icon" />
+              <Image src="/images/popup-icon-building.svg" alt="地址" className="popup-icon" width={16} height={16} />
               <span className="popup-text">{feature.properties.address}</span>
             </div>
           )}
 
           {feature.properties.phone && (
             <div className="popup-info-row">
-              <img src="/images/popup-icon-phone.svg" alt="電話" className="popup-icon" />
+              <Image src="/images/popup-icon-phone.svg" alt="電話" className="popup-icon" width={16} height={16} />
               <span className="popup-text">{feature.properties.phone}</span>
             </div>
           )}
 
           {feature.properties.website && (
             <div className="popup-info-row">
-              <img src="/images/popup-icon-global.svg" alt="網站" className="popup-icon" />
+              <Image src="/images/popup-icon-global.svg" alt="網站" className="popup-icon" width={16} height={16} />
               <a href={feature.properties.website} target="_blank" rel="noopener noreferrer" className="popup-text popup-link">
                 {feature.properties.website}
               </a>
@@ -83,7 +84,7 @@ const CustomPopup = ({ feature }: CustomPopupProps) => {
 
           {feature.properties.glink && (
             <div className="popup-info-row">
-              <img src="/images/popup-icon-google.svg" alt="Google 地圖" className="popup-icon" />
+              <Image src="/images/popup-icon-google.svg" alt="Google 地圖" className="popup-icon" width={16} height={16} />
               <a href={feature.properties.glink} target="_blank" rel="noopener noreferrer" className="popup-text popup-link">
                 在 Google 地圖中開啟
               </a>

@@ -16,8 +16,8 @@ const Map = ({ center, zoom }: MapProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [locations, setLocations] = useState<GeoJSONData | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>('all');
-  const [selectedFeature, setSelectedFeature] = useState<GeoJSONFeature | null>(null);
-  const [searchedFeature, setSearchedFeature] = useState<GeoJSONFeature | null>(null);
+  const [, setSelectedFeature] = useState<GeoJSONFeature | null>(null);
+  const [, setSearchedFeature] = useState<GeoJSONFeature | null>(null);
   const [pulsatingMarkerId, setPulsatingMarkerId] = useState<string | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
