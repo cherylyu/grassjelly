@@ -6,12 +6,15 @@ if (!MONGODB_URI) {
   throw new Error('請提供 MONGODB_URI 環境變數');
 }
 
+// Augment the global namespace with the mongoose property
+declare global {
+  var mongoose: any | undefined; // eslint-disable-line no-var, @typescript-eslint/no-explicit-any
+}
+
 // Cache the Mongoose connection, especially useful in dev mode's hot-reload environment
-// @ts-ignore
 let cached = global.mongoose;
 
 if (!cached) {
-  // @ts-ignore
   cached = global.mongoose = { conn: null, promise: null };
 }
 

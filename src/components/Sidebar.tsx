@@ -1,18 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { SidebarProps, Category } from '@/interfaces';
 import Image from 'next/image';
-import categoriesData from '@/data/categories.json';
 
-const Sidebar = ({ onCategorySelect, selectedCategory }: SidebarProps) => {
+const Sidebar = ({ categories, onCategorySelect, selectedCategory }: SidebarProps) => {
   const [collapsed, setCollapsed] = useState(false);
-  const [categories, setCategories] = useState<Category[]>([]);
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
-
-  useEffect(() => {
-    setCategories(categoriesData as Category[]);
-  }, []);
 
   const toggleCategory = (categoryId: string) => {
     if (expandedCategories.includes(categoryId)) {

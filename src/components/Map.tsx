@@ -150,6 +150,7 @@ const Map = ({ center, zoom }: MapProps) => {
   return (
     <>
       <Sidebar
+        categories={categories}
         selectedCategory={selectedCategory}
         onCategorySelect={handleCategorySelect}
       />
