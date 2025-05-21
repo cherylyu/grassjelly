@@ -1,6 +1,19 @@
 import { NextResponse } from 'next/server';
-import categoriesData from '@/data/categories.json';
+import { connectToDatabase } from '@/lib/mongodb';
+import { Category } from '@/models/Category';
 
 export async function GET() {
-  return NextResponse.json(categoriesData);
+  try {
+    await connectToDatabase();
+
+    const categories = await Category.find({}).lean();
+
+    return NextResponse.json(categories);
+  } catch (error) {
+    console.error('獲取類別資料失敗:', error);
+    return NextResponse.json(
+      { error: '獲取類別資料時發生錯誤' },
+      { status: 500 }
+    );
+  }
 }
