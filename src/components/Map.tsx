@@ -187,11 +187,11 @@ const Map = ({ center, zoom }: MapProps) => {
           const icon = L.divIcon({
             className: '',
             html: `<div class="marker-icon-wrapper ${isPulsating ? 'marker-pulse' : ''}">
-                    <img src="/images/marker-icons/${feature.properties.category || 'default'}.svg" alt="Marker" width="48" height="48" />
+                    <img src="/images/marker-icons/${feature.properties.category || 'default'}.svg" alt="Marker" width="40" height="50" />
                   </div>`,
-            iconSize: [48, 48],
-            iconAnchor: [24, 48],
-            popupAnchor: [0, -48]
+            iconSize: [40, 50],
+            iconAnchor: [20, 50],
+            popupAnchor: [0, -50]
           });
 
           return (

@@ -60,7 +60,7 @@ const Sidebar = ({ categories, onCategorySelect, selectedCategory }: SidebarProp
               <div className="w-5 h-5 mx-2"></div>
             )}
 
-            <div className={`w-5 h-5 mr-2 flex-shrink-0 rounded-xs checkbox ${level > 0 ? 'opacity-70' : ''} ${isSelected ? 'checked' : ''}`}
+            <div className={`w-5 h-5 mr-2 flex-shrink-0 rounded-xs checkbox ${isSelected ? 'checked' : ''}`}
               style={{ backgroundColor: categoryColor }}
             ></div>
 
