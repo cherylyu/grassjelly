@@ -1,4 +1,7 @@
+'use client';
+
 import dynamic from 'next/dynamic';
+import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 
 // Dynamically load the map component to avoid SSR
@@ -8,11 +11,21 @@ const MapWithNoSSR = dynamic(() => import('@/components/Map'), {
 });
 
 export default function Home() {
+  const [currentView, setCurrentView] = useState<'filter' | 'about'>('filter');
+
+  const handleToggleView = (view: 'filter' | 'about') => {
+    setCurrentView(view);
+  };
+
   return (
     <div className="w-screen h-screen overflow-hidden">
-      <Navbar />
+      <Navbar currentView={currentView} onToggleView={handleToggleView} />
       <div className="pl-[80px] w-full h-full">
-        <MapWithNoSSR center={[25.011905, 121.216255]} zoom={16} />
+        <MapWithNoSSR
+          center={[25.011905, 121.216255]}
+          zoom={16}
+          currentView={currentView}
+        />
       </div>
     </div>
   );

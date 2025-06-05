@@ -12,7 +12,7 @@ import './common.css';
 import './customPopup.css';
 import './pulsatingMarker.css';
 
-const Map = ({ center, zoom }: MapProps) => {
+const Map = ({ center, zoom, currentView }: MapProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [locations, setLocations] = useState<GeoJSONData | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>('all');
@@ -153,6 +153,7 @@ const Map = ({ center, zoom }: MapProps) => {
         categories={categories}
         selectedCategory={selectedCategory}
         onCategorySelect={handleCategorySelect}
+        currentView={currentView}
       />
       {locations && (
         <SearchBox
