@@ -5,20 +5,20 @@ import { MapContainer, TileLayer, Marker, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { GeoJSONFeature, GeoJSONData, MapProps, Category } from '@/interfaces';
-import CustomPopup from './CustomPopup';
+import LocationOverlay from './LocationOverlay';
 import SearchBox from './SearchBox';
 import Sidebar from './Sidebar';
 import './common.css';
-import './customPopup.css';
 import './pulsatingMarker.css';
 
 const Map = ({ center, zoom, currentView }: MapProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [locations, setLocations] = useState<GeoJSONData | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>('all');
-  const [, setSelectedFeature] = useState<GeoJSONFeature | null>(null);
-  const [, setSearchedFeature] = useState<GeoJSONFeature | null>(null);
+  const [selectedFeature, setSelectedFeature] = useState<GeoJSONFeature | null>(null);
+  const [searchedFeature, setSearchedFeature] = useState<GeoJSONFeature | null>(null); // eslint-disable-line @typescript-eslint/no-unused-vars
   const [pulsatingMarkerId, setPulsatingMarkerId] = useState<string | null>(null);
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -84,8 +84,7 @@ const Map = ({ center, zoom, currentView }: MapProps) => {
       const marker = markerRefs.current[markerId];
       if (marker) {
         setTimeout(() => {
-          marker.openPopup();
-          setPulsatingMarkerId(feature.properties.id);
+          handleMarkerClick(feature);
         }, 300); // Short delay to ensure the map has moved to the position
       }
     }
@@ -101,8 +100,20 @@ const Map = ({ center, zoom, currentView }: MapProps) => {
     setTimeout(() => {
       setSearchedFeature(feature);
       setSelectedFeature(feature);
+      setIsOverlayOpen(true);
       moveToLocation(feature);
     }, 100); // Short delay to ensure the markers have been rendered
+  };
+
+  const handleMarkerClick = (feature: GeoJSONFeature) => {
+    setSelectedFeature(feature);
+    setPulsatingMarkerId(feature.properties.id);
+    setIsOverlayOpen(true);
+  };
+
+  const handleCloseOverlay = () => {
+    setPulsatingMarkerId(null);
+    setIsOverlayOpen(false);
   };
 
   const isInSelectedCategory = (featureCategoryId: string, categoryId: string | null): boolean => {
@@ -204,17 +215,18 @@ const Map = ({ center, zoom, currentView }: MapProps) => {
                 markerRefs.current[feature.properties.id] = marker;
               }}
               eventHandlers={{
-                click: () => {
-                  setSelectedFeature(feature);
-                  setPulsatingMarkerId(feature.properties.id);
-                }
+                click: () => handleMarkerClick(feature)
               }}
-            >
-              <CustomPopup feature={feature} />
-            </Marker>
+            />
           );
         })}
       </MapContainer>
+
+      <LocationOverlay
+        feature={selectedFeature}
+        isOpen={isOverlayOpen}
+        onClose={handleCloseOverlay}
+      />
     </>
   );
 };

@@ -5,10 +5,13 @@ import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 
 // Dynamically load the map component to avoid SSR
-const MapWithNoSSR = dynamic(() => import('@/components/Map'), {
-  ssr: !!false,
-  loading: () => <div className="w-full h-full bg-gray-200 animate-pulse flex items-center justify-center">Loading map...</div>
-});
+const MapWithNoSSR = dynamic(
+  () => import('@/components/Map'),
+  {
+    loading: () => <div className="w-full h-full bg-gray-200 animate-pulse flex items-center justify-center">Loading map...</div>,
+    ssr: false
+  }
+);
 
 export default function Home() {
   const [currentView, setCurrentView] = useState<'filter' | 'about'>('filter');
