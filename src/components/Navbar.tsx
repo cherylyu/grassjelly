@@ -36,7 +36,7 @@ const Navbar = ({ currentView = 'filter', onToggleView }: NavbarProps) => {
         <button
           className={`flex flex-col items-center justify-center w-16 h-16 mb-4 p-2 cursor-pointer rounded-md transition-all duration-200 ${
             activeView === 'filter'
-              ? 'bg-teal-50 text-teal-600'
+              ? 'bg-[#1fb14114] text-teal-600'
               : 'hover:bg-gray-200 text-gray-700'
           }`}
           onClick={() => handleViewToggle('filter')}
@@ -51,7 +51,7 @@ const Navbar = ({ currentView = 'filter', onToggleView }: NavbarProps) => {
         <button
           className={`flex flex-col items-center justify-center w-16 h-16 mb-4 p-2 cursor-pointer rounded-md transition-all duration-200 ${
             activeView === 'about'
-              ? 'bg-teal-50 text-teal-600'
+              ? 'bg-[#1fb14114] text-teal-600'
               : 'hover:bg-gray-200 text-gray-700'
           }`}
           onClick={() => handleViewToggle('about')}

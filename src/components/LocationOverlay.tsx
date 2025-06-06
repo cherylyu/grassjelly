@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { GeoJSONFeature } from '@/interfaces';
 
 interface LocationOverlayProps {
@@ -18,16 +17,16 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
 
   return (
     <div
-      className={`fixed bottom-0 left-[50%] transform -translate-x-1/2 w-[600px] max-w-[95vw] bg-white rounded-t-lg shadow-xl transition-all duration-300 ease-in-out z-[1000] ${
+      className={`location-overlay-container fixed bottom-0 left-[50%] transform -translate-x-1/2 w-[400px] max-w-[95vw] bg-white rounded-t-lg transition-all duration-300 ease-in-out z-[1000] ${
         isOpen ? 'translate-y-0' : 'translate-y-full'
       }`}
     >
-      <div className="location-overlay-container">
-        <div className="bg-gray-100 px-4 py-3 rounded-t-lg flex justify-between items-center border-b border-gray-200">
+      <div className="location-overlay">
+        <div className="p-5 pb-2 rounded-t-lg flex justify-between items-center">
           <h3 className="text-lg font-semibold text-gray-800">{feature.properties.name}</h3>
           <button
             onClick={onClose}
-            className="p-1 rounded-full hover:bg-gray-200 transition-colors"
+            className="p-1 rounded-full hover:bg-gray-200 transition-colors cursor-pointer"
             aria-label="關閉"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -37,7 +36,7 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
           </button>
         </div>
 
-        <div className="p-4">
+        <div className="p-5 pt-2">
           {feature.properties.description && (
             <div className="mb-4 text-gray-700">
               {feature.properties.description.length > DESCRIPTION_CHAR_LIMIT && !expandedDescriptions[feature.properties.id] ? (
@@ -79,33 +78,48 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
           <div className="space-y-3">
             {feature.properties.address && (
               <div className="flex items-center">
-                <Image src="/images/popup-icons/building.svg" alt="地址" width={18} height={18} className="mr-3 flex-shrink-0" />
+                <i className="fa-solid fa-building text-center w-4 mr-2"></i>
                 <span className="text-gray-700">{feature.properties.address}</span>
               </div>
             )}
 
             {feature.properties.phone && (
               <div className="flex items-center">
-                <Image src="/images/popup-icons/phone.svg" alt="電話" width={18} height={18} className="mr-3 flex-shrink-0" />
+                <i className="fa-solid fa-phone text-center w-4 mr-2"></i>
                 <span className="text-gray-700">{feature.properties.phone}</span>
               </div>
             )}
 
-            {feature.properties.website && (
-              <div className="flex items-center">
-                <Image src="/images/popup-icons/global.svg" alt="網站" width={18} height={18} className="mr-3 flex-shrink-0" />
-                <a href={feature.properties.website} target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:text-teal-700 hover:underline">
-                  {feature.properties.website}
-                </a>
-              </div>
-            )}
+            {/* Buttons Area */}
+            {(feature.properties.website || feature.properties.glink) && (
+              <div className="flex gap-2 mt-4">
+                {feature.properties.website && (
+                  <a
+                    href={feature.properties.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center justify-center bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded transition-colors ${
+                      feature.properties.glink ? 'w-1/2' : 'w-full'
+                    }`}
+                  >
+                    <i className="fa-solid fa-earth-americas mr-2"></i>
+                    <span>官方網站</span>
+                  </a>
+                )}
 
-            {feature.properties.glink && (
-              <div className="flex items-center">
-                <Image src="/images/popup-icons/google.svg" alt="Google 地圖" width={18} height={18} className="mr-3 flex-shrink-0" />
-                <a href={feature.properties.glink} target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:text-teal-700 hover:underline">
-                  在 Google 地圖中開啟
-                </a>
+                {feature.properties.glink && (
+                  <a
+                    href={feature.properties.glink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center justify-center bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded transition-colors ${
+                      feature.properties.website ? 'w-1/2' : 'w-full'
+                    }`}
+                  >
+                    <i className="fa-solid fa-map mr-2"></i>
+                    <span>Google 地圖</span>
+                  </a>
+                )}
               </div>
             )}
           </div>

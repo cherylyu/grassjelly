@@ -87,7 +87,7 @@ const Sidebar = ({ categories, onCategorySelect, selectedCategory, currentView =
     >
       {currentView === 'filter' ? (
         <>
-          <h2 className="text-md font-medium">類別</h2>
+          <h2 className="text-md font-medium pt-2">類別</h2>
 
           <div className="category-tree py-2 text-sm">
             <div className="category-item">
@@ -112,7 +112,7 @@ const Sidebar = ({ categories, onCategorySelect, selectedCategory, currentView =
 
           <div className="text-sm text-gray-700 space-y-4">
             <p>
-              歡迎使用本地圖！這是一個為協助青埔居民及遊客探索該地區而打造的地圖。
+              這是一個協助青埔居民及遊客探索生活周遭環境的互動式地圖，歡迎使用！
             </p>
             <p>
               您可以透過本站輕鬆找到各種地點，包括醫療設施、便利商店、公園等等。每個地點都被分類並以特定顏色標記，讓您能快速識別。
@@ -120,8 +120,11 @@ const Sidebar = ({ categories, onCategorySelect, selectedCategory, currentView =
             <p>
               未來將會陸續新增餐廳、店舖等資訊，以及支援其他篩選條件。
             </p>
-            <p>
-              如您遇到任何關於地圖的問題，麻煩到 <a href="https://github.com/cherylyu/grassjelly/issues" target="_blank" rel="noopener noreferrer" className="text-teal-600 underline underline-offset-4">GitHub</a> 回報給作者。謝謝！
+            <p className="mt-6">
+              <a href="https://github.com/cherylyu/grassjelly" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:text-teal-700 underline underline-offset-4">
+                <i className="fa-solid fa-code-fork mr-2"></i>
+                GitHub
+              </a>
             </p>
           </div>
         </div>
