@@ -7,7 +7,6 @@ import L from 'leaflet';
 import { GeoJSONFeature, GeoJSONData, MapProps, Category } from '@/interfaces';
 import LocationOverlay from './LocationOverlay';
 import SearchBox from './SearchBox';
-import Sidebar from './Sidebar';
 import './common.css';
 import './pulsatingMarker.css';
 
@@ -160,12 +159,6 @@ const Map = ({ center, zoom, currentView }: MapProps) => {
 
   return (
     <>
-      <Sidebar
-        categories={categories}
-        selectedCategory={selectedCategory}
-        onCategorySelect={handleCategorySelect}
-        currentView={currentView}
-      />
       {locations && (
         <SearchBox
           locations={locations.features}

@@ -4,8 +4,7 @@ import { useState } from 'react';
 import { SidebarProps, Category } from '@/interfaces';
 import Image from 'next/image';
 
-const Sidebar = ({ categories, onCategorySelect, selectedCategory, currentView = 'filter' }: SidebarProps) => {
-  const [collapsed, setCollapsed] = useState(false);
+const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selectedCategory, collapsed = false, onCollapseStateChange }: SidebarProps) => {
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
 
   const toggleCategory = (categoryId: string) => {
@@ -19,6 +18,12 @@ const Sidebar = ({ categories, onCategorySelect, selectedCategory, currentView =
   const handleCategorySelect = (categoryId: string | null) => {
     if (onCategorySelect) {
       onCategorySelect(selectedCategory === categoryId ? null : categoryId);
+    }
+  };
+
+  const handleCollapseToggle = () => {
+    if (onCollapseStateChange) {
+      onCollapseStateChange(!collapsed);
     }
   };
 
@@ -131,7 +136,7 @@ const Sidebar = ({ categories, onCategorySelect, selectedCategory, currentView =
       )}
 
       <button
-        onClick={() => setCollapsed(!collapsed)}
+        onClick={handleCollapseToggle}
         className={`absolute top-1/2 -right-6 w-6 h-12 z-501 flex items-center justify-center transition-transform cursor-pointer ${
           collapsed ? 'rotate-180' : 'bg-white rounded-r-md shadow-md'
         }`}
