@@ -27,6 +27,10 @@ export interface MapProps {
   center: [number, number];
   zoom: number;
   currentView?: 'filter' | 'about';
+  locations?: GeoJSONData | null;
+  categories: Category[];
+  selectedCategory?: string | null;
+  onSearchSelect?: () => void;
 }
 
 // Sidebar component interfaces
