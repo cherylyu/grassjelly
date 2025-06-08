@@ -1,3 +1,8 @@
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 400;
+}
+
 .checkbox.checked {
   background-image: url(/images/check.svg);
   background-repeat: no-repeat;
@@ -28,4 +33,12 @@
   bottom: 0.2em;
   z-index: -1;
   background-color: var(--color-green-200);
+}
+
+::selection {
+  background-color: var(--color-amber-100);
+}
+
+::-moz-selection {
+  background-color: var(--color-amber-100);
 }

@@ -101,7 +101,7 @@ export default function Home() {
         onToggleView={handleToggleView}
         onToggleSidebar={handleToggleSidebar}
       />
-      <div className="pl-[80px] w-full h-full">
+      <div className="w-full h-full pt-[70px] md:pt-0 md:pl-[90px]">
         <MapWithNoSSR
           center={[25.011905, 121.216255]}
           zoom={16}

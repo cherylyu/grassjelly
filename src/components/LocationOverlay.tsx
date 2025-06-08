@@ -17,13 +17,13 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
 
   return (
     <div
-      className={`location-overlay-container fixed bottom-0 left-[50%] transform -translate-x-1/2 w-[400px] max-w-[95vw] bg-white rounded-t-lg transition-all duration-300 ease-in-out z-[1000] ${
+      className={`location-overlay-container fixed bottom-0 left-[50%] transform -translate-x-1/2 w-[360px] max-w-full bg-white rounded-t-lg transition-all duration-300 ease-in-out z-500 ${
         isOpen ? 'translate-y-0' : 'translate-y-full'
       }`}
     >
-      <div className="location-overlay">
+      <div className="location-overlay text-sm md:text-md">
         <div className="p-5 pb-2 rounded-t-lg flex justify-between items-center">
-          <h3 className="text-lg font-semibold text-gray-800">{feature.properties.name}</h3>
+          <h3 className="text-base md:text-lg font-semibold text-gray-800">{feature.properties.name}</h3>
           <button
             onClick={onClose}
             className="p-1 rounded-full hover:bg-gray-200 transition-colors cursor-pointer"

@@ -86,13 +86,25 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
 
   return (
     <div
-      className={`fixed top-0 left-[90px] h-full w-[300px] p-4 bg-white shadow-lg z-500 transition-all duration-300 ease-in-out ${
-        collapsed ? 'transform -translate-x-[300px]' : ''
-      }`}
+      className={`fixed top-[70px] md:top-0 left-0 md:left-[90px] w-full md:w-[300px] h-[calc(100vh-70px)] md:h-full
+                  p-4 bg-white shadow-lg z-700 transition-all duration-600 ease-in-out overflow-y-auto md:overflow-visible
+                 ${collapsed ? 'transform -translate-y-[100vh] md:translate-y-0 md:-translate-x-[300px]' : ''}`}
     >
+      {/* Close button for small screens */}
+      <button
+        onClick={handleCollapseToggle}
+        className="md:hidden absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full"
+        aria-label="關閉側邊欄"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
       {currentView === 'filter' ? (
         <>
-          <h2 className="text-md font-medium pt-2">類別</h2>
+          <h2 className="text-base font-medium pt-2">類別</h2>
 
           <div className="category-tree py-2 text-sm">
             <div className="category-item">
@@ -135,9 +147,10 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
         </div>
       )}
 
+      {/* Collapse button for large screens */}
       <button
         onClick={handleCollapseToggle}
-        className={`absolute top-1/2 -right-6 w-6 h-12 z-501 flex items-center justify-center transition-transform cursor-pointer ${
+        className={`md:absolute top-1/2 -right-6 w-6 h-12 hidden md:flex items-center justify-center transition-transform cursor-pointer ${
           collapsed ? 'rotate-180' : 'bg-white rounded-r-md shadow-md'
         }`}
         aria-label={collapsed ? '展開側邊欄' : '收合側邊欄'}
