@@ -36,7 +36,7 @@ const Map = ({
       setPulsatingMarkerId(null);
       setIsOverlayOpen(false);
     }
-  }, [locations, selectedCategory]);
+  }, [locations, selectedCategory]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const moveToLocation = (feature: GeoJSONFeature) => {
     if (mapRef.current) {

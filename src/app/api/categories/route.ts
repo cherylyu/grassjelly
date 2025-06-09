@@ -6,7 +6,7 @@ export async function GET() {
   try {
     await connectToDatabase();
 
-    const categories = await Category.find({}).lean();
+    const categories = await Category.find({}).sort({ priority: 1 }).lean();
 
     return NextResponse.json(categories);
   } catch (error) {
