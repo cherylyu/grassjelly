@@ -22,7 +22,7 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
       }`}
     >
       <div className="location-overlay text-sm md:text-md">
-        <div className="p-5 pb-2 rounded-t-lg flex justify-between items-center">
+        <div className="px-5 pt-5 pb-1 rounded-t-lg flex justify-between items-center">
           <h3 className="text-base md:text-lg font-semibold text-gray-800">{feature.properties.name}</h3>
           <button
             onClick={onClose}
@@ -36,9 +36,9 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
           </button>
         </div>
 
-        <div className="p-5 pt-2">
+        <div className="px-5 pt-1 pb-3">
           {feature.properties.description && (
-            <div className="mb-4 text-gray-700">
+            <div className="mb-3 text-gray-700">
               {feature.properties.description.length > DESCRIPTION_CHAR_LIMIT && !expandedDescriptions[feature.properties.id] ? (
                 <>
                   {feature.properties.description.substring(0, DESCRIPTION_CHAR_LIMIT)}...
@@ -75,7 +75,7 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
             </div>
           )}
 
-          <div className="space-y-3">
+          <div className="space-y-2">
             {feature.properties.address && (
               <div className="flex items-center">
                 <i className="fa-solid fa-building text-center w-4 mr-2"></i>
@@ -92,15 +92,13 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
 
             {/* Buttons Area */}
             {(feature.properties.website || feature.properties.glink) && (
-              <div className="flex gap-2 mt-4">
+              <div className="flex justify-center gap-2 mt-3">
                 {feature.properties.website && (
                   <a
                     href={feature.properties.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`flex items-center justify-center bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded transition-colors ${
-                      feature.properties.glink ? 'w-1/2' : 'w-full'
-                    }`}
+                    className={`btn-capsule font-semibold flex items-center justify-center w-1/2`}
                   >
                     <i className="fa-solid fa-earth-americas mr-2"></i>
                     <span>官方網站</span>
@@ -112,9 +110,7 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
                     href={feature.properties.glink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`flex items-center justify-center bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded transition-colors ${
-                      feature.properties.website ? 'w-1/2' : 'w-full'
-                    }`}
+                    className={`btn-capsule font-semibold flex items-center justify-center w-1/2`}
                   >
                     <i className="fa-solid fa-map mr-2"></i>
                     <span>Google 地圖</span>

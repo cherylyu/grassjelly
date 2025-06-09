@@ -62,7 +62,7 @@ const SearchBox = ({ locations, onSelectLocation }: SearchBoxProps) => {
   };
 
   return (
-    <div className="absolute w-full md:w-[300px] top-20 md:top-4 left-1/2 px-4 transform -translate-x-1/2 z-600">
+    <div className="absolute w-full max-w-[320px] top-20 md:top-4 left-1/2 transform -translate-x-1/2 z-600">
       <div className="relative">
         <div className="relative flex items-center">
           <input
@@ -72,7 +72,7 @@ const SearchBox = ({ locations, onSelectLocation }: SearchBoxProps) => {
             onChange={handleSearchChange}
             onFocus={handleSearchFocus}
             onKeyDown={handleKeyDown}
-            className="w-full px-4 py-2 pr-10 rounded-md bg-white/60 backdrop-blur-md border border-gray-300 shadow-md hover:border-gray-400 focus:outline-none focus:border-emerald-400 focus:ring focus:ring-emerald-400 duration-300 ease-in-out"
+            className="w-full px-4 py-2 pr-10 rounded-full bg-white/60 backdrop-blur-md border border-gray-300 shadow-md hover:border-gray-400 focus:outline-none focus:border-emerald-400 focus:ring focus:ring-emerald-400 duration-300 ease-in-out"
           />
           <span className="absolute right-2 p-1.5 rounded-md bg-transparent">
             <Image src="/images/search.svg" alt="搜尋" width={20} height={20} />

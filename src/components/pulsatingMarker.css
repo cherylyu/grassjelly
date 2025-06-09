@@ -5,13 +5,15 @@
 .marker-pulse::before {
   content: '';
   position: absolute;
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 20px;
   left: 50%;
-  top: 50%;
-  margin-left: -16px;
-  margin-top: -24px;
-  background: radial-gradient(circle,rgba(237, 221, 83, 1) 30%, rgba(255, 184, 133, 1) 100%);
+  bottom: -12%;
+  margin-left: -19px;
+  margin-top: -10px;
+  background: #ff8c8c;
+  background: radial-gradient(circle,rgba(232, 58, 72, 1) 0%, rgba(255, 212, 212, 1) 70%);
+  border: 2px solid #fff;
   border-radius: 50%;
   z-index: -1;
   animation: pulse 3s ease-in-out infinite;
@@ -19,15 +21,15 @@
 
 @keyframes pulse {
   0% {
-    transform: scale(1.5);
-    opacity: 0.7;
+    transform: scale(1.2);
+    opacity: 0.8;
   }
   50% {
-    transform: scale(1.8);
-    opacity: 0.5;
+    transform: scale(1.4);
+    opacity: 0.6;
   }
   100% {
-    transform: scale(1.5);
-    opacity: 0.7;
+    transform: scale(1.2);
+    opacity: 0.8;
   }
 }

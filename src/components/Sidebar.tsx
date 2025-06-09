@@ -86,8 +86,8 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
 
   return (
     <div
-      className={`fixed top-[70px] md:top-0 left-0 md:left-[90px] w-full md:w-[300px] h-[calc(100vh-70px)] md:h-full
-                  p-4 bg-white shadow-lg z-700 transition-all duration-600 ease-in-out overflow-y-auto md:overflow-visible
+      className={`sidebar fixed top-[70px] md:top-0 left-0 md:left-[90px] w-full md:w-[300px] h-[calc(100vh-70px)] md:h-full
+                  p-4 bg-white z-700 transition-all duration-600 ease-in-out overflow-y-auto md:overflow-visible
                  ${collapsed ? 'transform -translate-y-[100vh] md:translate-y-0 md:-translate-x-[300px]' : ''}`}
     >
       {/* Close button for small screens */}
@@ -150,8 +150,8 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
       {/* Collapse button for large screens */}
       <button
         onClick={handleCollapseToggle}
-        className={`md:absolute top-1/2 -right-6 w-6 h-12 hidden md:flex items-center justify-center transition-transform cursor-pointer ${
-          collapsed ? 'rotate-180' : 'bg-white rounded-r-md shadow-md'
+        className={`btn-collapse md:absolute top-1/2 -right-6 w-6 h-12 hidden md:flex items-center justify-center transition-transform cursor-pointer ${
+          collapsed ? 'rotate-180 collapsed' : 'bg-white rounded-r-md expanded'
         }`}
         aria-label={collapsed ? '展開側邊欄' : '收合側邊欄'}
       >
