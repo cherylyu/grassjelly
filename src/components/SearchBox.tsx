@@ -62,7 +62,7 @@ const SearchBox = ({ locations, onSelectLocation }: SearchBoxProps) => {
   };
 
   return (
-    <div className="absolute w-full max-w-[320px] top-20 md:top-4 left-1/2 transform -translate-x-1/2 z-600">
+    <div className="fixed w-full max-w-[320px] top-20 md:top-4 left-1/2 transform -translate-x-1/2 z-600">
       <div className="relative">
         <div className="relative flex items-center">
           <input

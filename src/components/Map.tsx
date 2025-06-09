@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -22,8 +22,21 @@ const Map = ({
   const [searchedFeature, setSearchedFeature] = useState<GeoJSONFeature | null>(null); // eslint-disable-line @typescript-eslint/no-unused-vars
   const [pulsatingMarkerId, setPulsatingMarkerId] = useState<string | null>(null);
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const [filteredMarkers, setFilteredMarkers] = useState<GeoJSONFeature[]>([]);
   const mapRef = useRef<L.Map | null>(null);
   const markerRefs = useRef<Record<string, L.Marker | null>>({});
+
+  useEffect(() => {
+    if (locations && selectedCategory !== undefined) {
+      const filtered = locations.features.filter(feature =>
+        isInSelectedCategory(feature.properties.category, selectedCategory || '')
+      );
+      setFilteredMarkers(filtered);
+
+      setPulsatingMarkerId(null);
+      setIsOverlayOpen(false);
+    }
+  }, [locations, selectedCategory]);
 
   const moveToLocation = (feature: GeoJSONFeature) => {
     if (mapRef.current) {
@@ -109,6 +122,15 @@ const Map = ({
           onSelectLocation={handleSearchSelect}
         />
       )}
+
+      {filteredMarkers.length === 0 && (
+        <div className="absolute w-[300px] p-2 top-1/2 left-1/2 transform -translate-x-1/2 rounded-md shadow-md
+                        bg-amber-50 text-amber-600 border border-amber-600 text-sm text-center z-600">
+          <i className="fa-solid fa-circle-exclamation mr-2"></i>
+          查無符合的地點，請更新您的篩選條件
+        </div>
+      )}
+
       <MapContainer
         center={center}
         zoom={zoom}
@@ -122,9 +144,7 @@ const Map = ({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {locations && locations.features
-          .filter(feature => isInSelectedCategory(feature.properties.category, selectedCategory || ''))
-          .map((feature, index) => {
+        {filteredMarkers.map((feature, index) => {
           // GeoJSON coordinates are [longitude, latitude], but Leaflet needs [latitude, longitude]
           const position: [number, number] = [
             feature.geometry.coordinates[1],
