@@ -37,6 +37,7 @@ const Navbar = ({ currentView = 'filter', sidebarCollapsed = false, onToggleView
           width={48}
           height={48}
           className="object-contain"
+          priority={true}
         />
       </div>
 
