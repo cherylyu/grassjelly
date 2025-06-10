@@ -8,7 +8,7 @@ import { GeoJSONFeature, MapProps, Category } from '@/interfaces';
 import LocationOverlay from './LocationOverlay';
 import SearchBox from './SearchBox';
 import './common.css';
-import './pulsatingMarker.css';
+import './pulsating.css';
 
 const Map = ({
   center,

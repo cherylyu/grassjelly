@@ -45,11 +45,11 @@ const Navbar = ({ currentView = 'filter', sidebarCollapsed = false, onToggleView
                       md:mt-auto md:mb-auto md:space-y-2">
         <button
           className={`flex flex-row md:flex-col items-center justify-center cursor-pointer rounded-md
-                      w-9 md:w-16 h-9 md:h-16 mr-2 md:mr-0 md:mb-4 p-2 transition-all duration-200
+                      w-10 md:w-16 h-10 md:h-16 mr-2 md:mr-0 md:mb-4 p-2 transition-all duration-200
                      ${
             activeView === 'filter' && !sidebarCollapsed
               ? 'bg-[#00d5be33] text-emerald-600'
-              : 'hover:bg-[#4c4c4c14] text-gray-700'
+              : 'hover:bg-slate-200 text-gray-700'
           }`}
           onClick={() => handleViewToggle('filter')}
           aria-label="篩選"
@@ -68,11 +68,11 @@ const Navbar = ({ currentView = 'filter', sidebarCollapsed = false, onToggleView
 
         <button
           className={`flex flex-row md:flex-col items-center justify-center cursor-pointer rounded-md
-                      w-9 md:w-16 h-9 md:h-16 mr-2 md:mr-0 md:mb-4 p-2 transition-all duration-200
+                      w-10 md:w-16 h-10 md:h-16 mr-2 md:mr-0 md:mb-4 p-2 transition-all duration-200
                      ${
             activeView === 'about' && !sidebarCollapsed
               ? 'bg-[#00d5be33] text-emerald-600'
-              : 'hover:bg-[#4c4c4c14] text-gray-700'
+              : 'hover:bg-slate-200 text-gray-700'
           }`}
           onClick={() => handleViewToggle('about')}
           aria-label="關於"

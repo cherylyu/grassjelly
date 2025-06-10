@@ -46,8 +46,8 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
     return (
       <div key={category.id} className="category-item">
         <div
-          className={`flex items-center py-2 cursor-pointer hover:bg-gray-100 ${
-            isSelected ? 'bg-gray-100' : ''
+          className={`flex items-center py-2 cursor-pointer hover:bg-slate-100 ${
+            isSelected ? 'bg-slate-100' : ''
           }`}
           onClick={() => handleCategorySelect(category.id)}
         >
@@ -93,7 +93,7 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
       {/* Close button for small screens */}
       <button
         onClick={handleCollapseToggle}
-        className="md:hidden absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full"
+        className="md:hidden absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 rounded-full"
         aria-label="關閉側邊欄"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -109,13 +109,13 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
           <div className="category-tree py-2 text-sm">
             <div className="category-item">
               <div
-                className={`flex items-center py-2 cursor-pointer hover:bg-gray-100 ${
-                  selectedCategory === 'all' ? 'bg-gray-100' : ''
+                className={`flex items-center py-2 cursor-pointer hover:bg-slate-100 ${
+                  selectedCategory === 'all' ? 'bg-slate-100' : ''
                 }`}
                 onClick={() => handleCategorySelect('all')}
               >
                 <span className="mx-1"></span>
-                <div className={`w-5 h-5 mr-2 flex-shrink-0 rounded-xs checkbox bg-gray-400 ${selectedCategory === 'all' ? 'checked' : ''}`}></div>
+                <div className={`w-5 h-5 mr-2 flex-shrink-0 rounded-xs checkbox bg-slate-400 ${selectedCategory === 'all' ? 'checked' : ''}`}></div>
                 <span>全部類別</span>
               </div>
             </div>

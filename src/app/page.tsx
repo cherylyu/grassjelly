@@ -4,13 +4,14 @@ import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { GeoJSONData, Category } from '@/interfaces';
 
 // Dynamically load the map component to avoid SSR
 const MapWithNoSSR = dynamic(
   () => import('@/components/Map'),
   {
-    loading: () => <div className="w-full h-full flex items-center justify-center bg-gray-200 animate-pulse">Loading map...</div>,
+    loading: () => <div className="w-full h-full flex items-center justify-center bg-slate-100 animate-pulse">載入地圖中...</div>,
     ssr: false
   }
 );
@@ -86,7 +87,7 @@ export default function Home() {
   };
 
   if (isLoading) {
-    return <div className="w-full h-full min-h-screen flex items-center justify-center bg-gray-200 animate-pulse">Loading site...</div>;
+    return <div className="w-full h-full min-h-screen flex items-center justify-center bg-white"><LoadingSpinner /></div>;
   }
 
   if (error) {
