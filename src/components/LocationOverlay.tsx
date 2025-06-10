@@ -44,7 +44,7 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
                   {feature.properties.description.substring(0, DESCRIPTION_CHAR_LIMIT)}...
                   <a
                     href="#"
-                    className="text-teal-600 hover:text-teal-700 ml-1 font-medium"
+                    className="text-emerald-600 hover:text-emerald-700 ml-1 font-medium"
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -60,7 +60,7 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
                   {feature.properties.description.length > DESCRIPTION_CHAR_LIMIT && (
                     <a
                       href="#"
-                      className="text-teal-600 hover:text-teal-700 ml-1 font-medium"
+                      className="text-emerald-600 hover:text-emerald-700 ml-1 font-medium"
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();

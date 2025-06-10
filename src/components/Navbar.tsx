@@ -48,7 +48,7 @@ const Navbar = ({ currentView = 'filter', sidebarCollapsed = false, onToggleView
                       w-9 md:w-16 h-9 md:h-16 mr-2 md:mr-0 md:mb-4 p-2 transition-all duration-200
                      ${
             activeView === 'filter' && !sidebarCollapsed
-              ? 'bg-[#00d5be33] text-teal-600'
+              ? 'bg-[#00d5be33] text-emerald-600'
               : 'hover:bg-[#4c4c4c14] text-gray-700'
           }`}
           onClick={() => handleViewToggle('filter')}
@@ -71,7 +71,7 @@ const Navbar = ({ currentView = 'filter', sidebarCollapsed = false, onToggleView
                       w-9 md:w-16 h-9 md:h-16 mr-2 md:mr-0 md:mb-4 p-2 transition-all duration-200
                      ${
             activeView === 'about' && !sidebarCollapsed
-              ? 'bg-[#00d5be33] text-teal-600'
+              ? 'bg-[#00d5be33] text-emerald-600'
               : 'hover:bg-[#4c4c4c14] text-gray-700'
           }`}
           onClick={() => handleViewToggle('about')}

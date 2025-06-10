@@ -138,7 +138,7 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
               未來將會陸續新增餐廳、店舖等資訊，以及支援其他篩選條件。
             </p>
             <p className="mt-6">
-              <a href="https://github.com/cherylyu/grassjelly" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:text-teal-700 underline underline-offset-4">
+              <a href="https://github.com/cherylyu/grassjelly" target="_blank" rel="noopener noreferrer" className="font-bold text-emerald-600 hover:text-green-700 underline underline-offset-4">
                 <i className="fa-solid fa-code-fork mr-2"></i>
                 GitHub
               </a>
