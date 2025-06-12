@@ -26,7 +26,7 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
           <h3 className="text-base md:text-lg font-semibold">{feature.properties.name}</h3>
           <button
             onClick={onClose}
-            className="p-1 rounded-full hover:bg-gray-200 transition-colors cursor-pointer"
+            className="p-1 rounded-full hover:bg-slate-200 transition-colors cursor-pointer"
             aria-label="關閉"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

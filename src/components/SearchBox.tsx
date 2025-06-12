@@ -19,6 +19,12 @@ const SearchBox = ({ filteredLocations, onSelectLocation }: SearchBoxProps) => {
     setSelectedIndex(-1);
   };
 
+  const handleClearSearch = () => {
+    setSearchTerm('');
+    setShowResults(false);
+    setSelectedIndex(-1);
+  };
+
   const handleSearchFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Pre-select the input box for quicker text modification
     e.target.select();
@@ -72,11 +78,23 @@ const SearchBox = ({ filteredLocations, onSelectLocation }: SearchBoxProps) => {
             onChange={handleSearchChange}
             onFocus={handleSearchFocus}
             onKeyDown={handleKeyDown}
-            className="w-full px-4 py-2 pr-10 rounded-full bg-white/60 backdrop-blur-md border border-gray-300 shadow-md hover:border-gray-400 focus:outline-none focus:border-emerald-400 focus:ring focus:ring-emerald-400 duration-300 ease-in-out"
+            className="w-full px-10 py-2 rounded-full bg-white/60 backdrop-blur-md border border-gray-300 shadow-md hover:border-gray-400 focus:outline-none focus:border-emerald-400 focus:ring focus:ring-emerald-400 duration-300 ease-in-out"
           />
-          <span className="absolute right-2 p-1.5 rounded-md bg-transparent">
+          <span className="absolute left-2 p-1.5 rounded-md bg-transparent">
             <Image src="/images/search.svg" alt="搜尋" width={20} height={20} />
           </span>
+          {searchTerm && (
+            <button
+              onClick={handleClearSearch}
+              className="absolute right-2 p-1 rounded-full hover:bg-slate-200 transition-colors"
+              aria-label="清除搜尋"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          )}
         </div>
         {showResults && searchHints.length > 0 && (
           <ul className="search-hints absolute top-full left-0 right-0 mt-1 bg-white rounded-md max-h-[220px] overflow-y-auto">
@@ -86,7 +104,7 @@ const SearchBox = ({ filteredLocations, onSelectLocation }: SearchBoxProps) => {
                 className={`px-4 py-2 cursor-pointer ${
                   index === selectedIndex
                     ? 'bg-emerald-400 text-white font-semibold'
-                    : 'hover:bg-gray-100'
+                    : 'hover:bg-slate-100'
                 }`}
                 onClick={() => handleSelectLocation(location)}
               >
