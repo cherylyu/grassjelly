@@ -65,7 +65,7 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
               <div className="w-5 h-5 mx-2"></div>
             )}
 
-            <div className={`w-5 h-5 mr-2 flex-shrink-0 rounded-xs checkbox ${isSelected ? 'checked' : ''}`}
+            <div className={`w-5 h-5 mr-2 flex-shrink-0 rounded-full radio ${isSelected ? 'checked' : ''}`}
               style={{ backgroundColor: categoryColor }}
             ></div>
 
@@ -115,7 +115,7 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
                 onClick={() => handleCategorySelect('all')}
               >
                 <span className="mx-1"></span>
-                <div className={`w-5 h-5 mr-2 flex-shrink-0 rounded-xs checkbox bg-slate-400 ${selectedCategory === 'all' ? 'checked' : ''}`}></div>
+                <div className={`w-5 h-5 mr-2 flex-shrink-0 rounded-full radio bg-slate-400 ${selectedCategory === 'all' ? 'checked' : ''}`}></div>
                 <span>全部類別</span>
               </div>
             </div>

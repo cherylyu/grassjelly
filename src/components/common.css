@@ -33,10 +33,19 @@ nav {
   z-index: 400;
 }
 
-.checkbox.checked {
-  background-image: url(/images/check.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
+.radio.checked {
+  position: relative
+}
+
+.radio.checked:after {
+  content: '';
+  position: absolute;
+  width: 40%;
+  height: 40%;
+  top: 30%;
+  left: 30%;
+  border-radius: 50%;
+  background-color: #fff;
 }
 
 .category-expand-toggle {
