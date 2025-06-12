@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, KeyboardEvent, useEffect } from 'react';
+import { useState, KeyboardEvent, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { GeoJSONFeature, SearchBoxProps, Category } from '@/interfaces';
 
@@ -14,6 +14,10 @@ const SearchBox = ({
   const [showResults, setShowResults] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [placeholder, setPlaceholder] = useState('搜尋地點...');
+
+  // Track the search results and selected item for auto-scrolling
+  const resultsListRef = useRef<HTMLUListElement | null>(null);
+  const selectedItemRef = useRef<HTMLLIElement | null>(null);
 
   useEffect(() => {
     if (selectedCategory) {
@@ -77,6 +81,22 @@ const SearchBox = ({
     setSelectedIndex(-1);
   };
 
+  const scrollSelectedItemIntoView = () => {
+    if (selectedItemRef.current && resultsListRef.current) {
+      const listRect = resultsListRef.current.getBoundingClientRect();
+      const itemRect = selectedItemRef.current.getBoundingClientRect();
+
+      // Check if the selected item is outside the visible range
+      if (itemRect.bottom > listRect.bottom) {
+        // If the bottom of the item exceeds the bottom of the list, scroll down
+        selectedItemRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      } else if (itemRect.top < listRect.top) {
+        // If the top of the item exceeds the top of the list, scroll up
+        selectedItemRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
+
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (!showResults || searchHints.length === 0) return;
 
@@ -86,12 +106,16 @@ const SearchBox = ({
         setSelectedIndex(prev =>
           prev < searchHints.length - 1 ? prev + 1 : 0
         );
+        // Scroll the selected item into the visible range after the next render cycle
+        setTimeout(() => scrollSelectedItemIntoView(), 0);
         break;
       case 'ArrowUp':
         e.preventDefault();
         setSelectedIndex(prev =>
           prev > 0 ? prev - 1 : searchHints.length - 1
         );
+        // Scroll the selected item into the visible range after the next render cycle
+        setTimeout(() => scrollSelectedItemIntoView(), 0);
         break;
       case 'Enter':
         e.preventDefault();
@@ -105,6 +129,10 @@ const SearchBox = ({
         break;
     }
   };
+
+  useEffect(() => {
+    scrollSelectedItemIntoView();
+  }, [selectedIndex, showResults]);
 
   return (
     <div className="fixed w-full max-w-[320px] top-20 md:top-4 left-1/2 transform -translate-x-1/2 z-600">
@@ -136,10 +164,11 @@ const SearchBox = ({
           )}
         </div>
         {showResults && searchHints.length > 0 && (
-          <ul className="search-hints absolute top-full left-0 right-0 mt-1 bg-white rounded-md max-h-[220px] overflow-y-auto">
+          <ul ref={resultsListRef} className="search-hints absolute top-full left-0 right-0 mt-1 bg-white rounded-md max-h-[220px] overflow-y-auto">
             {searchHints.map((location, index) => (
               <li
                 key={index}
+                ref={index === selectedIndex ? selectedItemRef : null}
                 className={`px-4 py-2 cursor-pointer ${
                   index === selectedIndex
                     ? 'bg-emerald-400 text-white font-semibold'
