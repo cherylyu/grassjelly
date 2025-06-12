@@ -1,13 +1,36 @@
 # Grassjelly
 
-This is an interactive map application built with Next.js, React, TypeScript, Leaflet, OpenStreetMap, and Tailwind CSS.
+An interactive map application designed to help residents and visitors of Qingpu area explore their surroundings. The application provides a user-friendly interface to locate and discover various points of interest such as medical facilities, convenience stores, parks, and more.
+
+Visit the live application at [Lohas in Qingpu](https://lohas-in-qingpu.vercel.app).
 
 ## Features
-- Interactive map display using Leaflet and OpenStreetMap
-- Map markers and popups
-- Responsive design, adaptable to different screen sizes
 
-## Quick Start
+- **Interactive Map**: Built with Leaflet and OpenStreetMap
+- **Category Filtering**: Browse locations by categories and subcategories
+- **Search Functionality**: Find specific locations easily with keyboard navigation support
+- **Location Details**: View detailed information about each location including address, phone number, and links
+- **Responsive Design**: Fully optimized for both desktop and mobile devices
+- **Visual Feedback**: Pulsating markers highlight selected locations
+- **Accessibility**: Keyboard shortcuts and improved user experience
+
+## Tech Stack
+
+- **Frontend**: Next.js, React, TypeScript
+- **Styling**: Tailwind CSS
+- **Map Integration**: Leaflet, OpenStreetMap
+- **Database**: MongoDB for storing location and category data
+- **Deployment**: Vercel
+
+## Setup
+
+Make sure to install dependencies:
+
+```bash
+npm install
+```
+
+## Development Server
 
 Run the development server:
 
@@ -17,21 +40,10 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Build the application for production:
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+```

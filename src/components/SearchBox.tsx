@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, KeyboardEvent, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import { GeoJSONFeature, SearchBoxProps, Category } from '@/interfaces';
 
 const SearchBox = ({

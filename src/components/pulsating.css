@@ -8,8 +8,8 @@
 
 .loading-spinner {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(52, 211, 153, 1) 0%, rgba(209, 250, 229, 1) 70%);
   box-shadow: 0 0 20px rgba(52, 211, 153, 0.3);
@@ -50,4 +50,20 @@
     transform: scale(1.2);
     opacity: 0.8;
   }
+}
+
+.loading-marker {
+  position: absolute;
+  z-index: 10;
+  animation: bounce 1.5s ease infinite;
+}
+
+.loading-marker img {
+  filter: drop-shadow(0 2px 4px rgba(52, 211, 153, 0.8));
+}
+
+@keyframes bounce {
+	0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+	40% {transform: translateY(-30px);}
+	60% {transform: translateY(-15px);}
 }
