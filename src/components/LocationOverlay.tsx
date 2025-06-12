@@ -91,33 +91,29 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
             )}
 
             {/* Buttons Area */}
-            {(feature.properties.website || feature.properties.glink) && (
-              <div className="flex justify-center gap-2 mt-3">
-                {feature.properties.website && (
-                  <a
-                    href={feature.properties.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`btn-capsule font-semibold flex items-center justify-center w-1/2`}
-                  >
-                    <i className="fa-solid fa-earth-americas mr-2"></i>
-                    <span>官方網站</span>
-                  </a>
-                )}
+            <div className="flex justify-center gap-2 mt-3">
+              {feature.properties.website && (
+                <a
+                  href={feature.properties.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-capsule font-semibold flex items-center justify-center w-1/2"
+                >
+                  <i className="fa-solid fa-earth-americas mr-2"></i>
+                  <span>官方網站</span>
+                </a>
+              )}
 
-                {feature.properties.glink && (
-                  <a
-                    href={feature.properties.glink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`btn-capsule font-semibold flex items-center justify-center w-1/2`}
-                  >
-                    <i className="fa-solid fa-map mr-2"></i>
-                    <span>Google 地圖</span>
-                  </a>
-                )}
-              </div>
-            )}
+              <a
+                href={feature.properties.glink || `https://www.google.com/maps?q=${feature.geometry.coordinates[1]},${feature.geometry.coordinates[0]}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-capsule font-semibold flex items-center justify-center w-1/2"
+              >
+                <i className="fa-solid fa-map mr-2"></i>
+                <span>Google 地圖</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -145,10 +145,10 @@ const SearchBox = ({
             onChange={handleSearchChange}
             onFocus={handleSearchFocus}
             onKeyDown={handleKeyDown}
-            className="w-full px-10 py-2 rounded-full bg-white/60 backdrop-blur-md border border-gray-300 shadow-md hover:border-gray-400 focus:outline-none focus:border-emerald-400 focus:ring focus:ring-emerald-400 duration-300 ease-in-out"
+            className="w-full px-10 py-2 rounded-full bg-white/60 backdrop-blur-md border border-slate-300 shadow-md hover:border-slate-400 focus:outline-none focus:border-emerald-400 focus:ring focus:ring-emerald-400 duration-300 ease-in-out"
           />
-          <span className="absolute left-2 p-1.5 rounded-md bg-transparent">
-            <Image src="/images/search.svg" alt="搜尋" width={20} height={20} />
+          <span className="absolute left-2 px-2 py-1 rounded-md bg-transparent">
+            <i className="fa fa-search text-slate-400"></i>
           </span>
           {searchTerm && (
             <button
