@@ -1,13 +1,52 @@
 'use client';
 
-import { useState, KeyboardEvent } from 'react';
+import { useState, KeyboardEvent, useEffect } from 'react';
 import Image from 'next/image';
-import { GeoJSONFeature, SearchBoxProps } from '@/interfaces';
+import { GeoJSONFeature, SearchBoxProps, Category } from '@/interfaces';
 
-const SearchBox = ({ filteredLocations, onSelectLocation }: SearchBoxProps) => {
+const SearchBox = ({
+  filteredLocations,
+  categories = [],
+  selectedCategory,
+  onSelectLocation
+}: SearchBoxProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+  const [placeholder, setPlaceholder] = useState('搜尋地點...');
+
+  useEffect(() => {
+    if (selectedCategory) {
+      handleClearSearch();
+
+      const categoryName = findCategoryNameById(selectedCategory, categories);
+
+      if (categoryName) {
+        const needsSpace = /^[a-zA-Z0-9]/.test(categoryName);
+        setPlaceholder(`搜尋${needsSpace ? ' ' : ''}${categoryName}...`);
+      } else {
+        setPlaceholder('搜尋地點...');
+      }
+    } else {
+      setPlaceholder('搜尋地點...');
+    }
+  }, [selectedCategory, categories]);
+
+  const findCategoryNameById = (categoryId: string, categories: Category[]): string | null => {
+    for (const category of categories) {
+      if (category.id === categoryId) {
+        return category.name;
+      }
+      if (category.subcategories) {
+        for (const subcategory of category.subcategories) {
+          if (subcategory.id === categoryId) {
+            return subcategory.name;
+          }
+        }
+      }
+    }
+    return null;
+  };
 
   const searchHints = filteredLocations?.filter(location =>
     location.properties.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -73,7 +112,7 @@ const SearchBox = ({ filteredLocations, onSelectLocation }: SearchBoxProps) => {
         <div className="relative flex items-center">
           <input
             type="text"
-            placeholder="搜尋地點..."
+            placeholder={placeholder}
             value={searchTerm}
             onChange={handleSearchChange}
             onFocus={handleSearchFocus}

@@ -52,6 +52,8 @@ export interface Category {
 // Search box component interfaces
 export interface SearchBoxProps {
   filteredLocations: GeoJSONFeature[] | null;
+  categories?: Category[];
+  selectedCategory?: string | null;
   onSelectLocation: (feature: GeoJSONFeature) => void;
 }
 

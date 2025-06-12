@@ -114,6 +114,8 @@ const Map = ({
       {locations && (
         <SearchBox
           filteredLocations={filteredLocations}
+          categories={categories}
+          selectedCategory={selectedCategory}
           onSelectLocation={handleSearchSelect}
         />
       )}
