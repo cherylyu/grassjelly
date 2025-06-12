@@ -15,14 +15,13 @@ const Map = ({
   zoom,
   locations,
   categories,
-  selectedCategory,
-  onSearchSelect
+  selectedCategory
 }: MapProps) => {
   const [selectedFeature, setSelectedFeature] = useState<GeoJSONFeature | null>(null);
   const [searchedFeature, setSearchedFeature] = useState<GeoJSONFeature | null>(null); // eslint-disable-line @typescript-eslint/no-unused-vars
   const [pulsatingMarkerId, setPulsatingMarkerId] = useState<string | null>(null);
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
-  const [filteredMarkers, setFilteredMarkers] = useState<GeoJSONFeature[]>([]);
+  const [filteredLocations, setfilteredLocations] = useState<GeoJSONFeature[]>([]);
   const mapRef = useRef<L.Map | null>(null);
   const markerRefs = useRef<Record<string, L.Marker | null>>({});
 
@@ -31,7 +30,7 @@ const Map = ({
       const filtered = locations.features.filter(feature =>
         isInSelectedCategory(feature.properties.category, selectedCategory || '')
       );
-      setFilteredMarkers(filtered);
+      setfilteredLocations(filtered);
 
       setPulsatingMarkerId(null);
       setIsOverlayOpen(false);
@@ -57,10 +56,6 @@ const Map = ({
   };
 
   const handleSearchSelect = (feature: GeoJSONFeature) => {
-    if (onSearchSelect) {
-      onSearchSelect();
-    }
-
     setTimeout(() => {
       setSearchedFeature(feature);
       setSelectedFeature(feature);
@@ -118,12 +113,12 @@ const Map = ({
     <>
       {locations && (
         <SearchBox
-          locations={locations.features}
+          filteredLocations={filteredLocations}
           onSelectLocation={handleSearchSelect}
         />
       )}
 
-      {filteredMarkers.length === 0 && (
+      {filteredLocations.length === 0 && (
         <div className="absolute w-[300px] p-2 top-1/2 left-1/2 transform -translate-x-1/2 rounded-md shadow-md
                         bg-amber-50 text-amber-600 border border-amber-600 text-sm text-center z-600">
           <i className="fa-solid fa-circle-exclamation mr-2"></i>
@@ -144,7 +139,7 @@ const Map = ({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {filteredMarkers.map((feature, index) => {
+        {filteredLocations.map((feature, index) => {
           // GeoJSON coordinates are [longitude, latitude], but Leaflet needs [latitude, longitude]
           const position: [number, number] = [
             feature.geometry.coordinates[1],

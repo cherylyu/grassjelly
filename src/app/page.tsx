@@ -82,10 +82,6 @@ export default function Home() {
     setSelectedCategory(categoryId);
   };
 
-  const handleSearchSelect = () => {
-    setSelectedCategory('all');
-  };
-
   if (isLoading) {
     return <div className="w-full h-full min-h-screen flex items-center justify-center bg-white"><LoadingSpinner /></div>;
   }
@@ -106,11 +102,9 @@ export default function Home() {
         <MapWithNoSSR
           center={[25.011905, 121.216255]}
           zoom={16}
-          currentView={currentView}
           locations={locations}
           categories={categories}
           selectedCategory={selectedCategory}
-          onSearchSelect={handleSearchSelect}
         />
         <Sidebar
           currentView={currentView}

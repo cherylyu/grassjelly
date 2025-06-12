@@ -26,11 +26,9 @@ export interface GeoJSONData {
 export interface MapProps {
   center: [number, number];
   zoom: number;
-  currentView?: 'filter' | 'about';
   locations?: GeoJSONData | null;
   categories: Category[];
   selectedCategory?: string | null;
-  onSearchSelect?: () => void;
 }
 
 // Sidebar component interfaces
@@ -53,7 +51,7 @@ export interface Category {
 
 // Search box component interfaces
 export interface SearchBoxProps {
-  locations: GeoJSONFeature[] | null;
+  filteredLocations: GeoJSONFeature[] | null;
   onSelectLocation: (feature: GeoJSONFeature) => void;
 }
 
