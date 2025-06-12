@@ -6,7 +6,7 @@ import '@/components/common.css';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-b from-white to-emerald-50 p-4">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center text-gray-700 bg-gradient-to-b from-white to-emerald-50 p-4">
       <div className="w-full max-w-md relative flex flex-col items-center">
         <div className="text-9xl font-bold text-emerald-400 mb-4 flex items-center">
           4
@@ -22,7 +22,7 @@ export default function NotFound() {
           4
         </div>
 
-        <h1 className="text-xl font-medium text-gray-700 mb-8 text-center">
+        <h1 className="text-xl font-semibold mb-8 text-center">
           Oops! 您尋找的這個地點不存在
         </h1>
 

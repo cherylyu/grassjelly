@@ -86,7 +86,7 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
 
   return (
     <div
-      className={`sidebar fixed top-[70px] md:top-0 left-0 md:left-[90px] w-full md:w-[300px] h-[calc(100vh-70px)] md:h-full
+      className={`sidebar fixed top-[70px] md:top-0 left-0 md:left-[90px] w-full md:w-[300px] h-1/2 md:h-full
                   p-4 bg-white z-700 transition-all duration-600 ease-in-out overflow-y-auto md:overflow-visible
                  ${collapsed ? 'transform -translate-y-[100vh] md:translate-y-0 md:-translate-x-[300px]' : ''}`}
     >
@@ -104,7 +104,7 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
 
       {currentView === 'filter' ? (
         <>
-          <h2 className="text-base font-medium pt-2">類別</h2>
+          <h2 className="text-base font-semibold pt-2">地點類別</h2>
 
           <div className="category-tree py-2 text-sm">
             <div className="category-item">
@@ -125,9 +125,9 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
         </>
       ) : (
         <div className="about-content py-2">
-          <h2 className="text-md font-medium mb-4">關於本站</h2>
+          <h2 className="text-md font-semibold mb-4">關於本站</h2>
 
-          <div className="text-sm text-gray-700 space-y-4">
+          <div className="text-sm space-y-4">
             <p>
               這是一個協助青埔居民及遊客探索生活周遭環境的互動式地圖，歡迎使用！
             </p>

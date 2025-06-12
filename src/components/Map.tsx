@@ -127,7 +127,7 @@ const Map = ({
         <div className="absolute w-[300px] p-2 top-1/2 left-1/2 transform -translate-x-1/2 rounded-md shadow-md
                         bg-amber-50 text-amber-600 border border-amber-600 text-sm text-center z-600">
           <i className="fa-solid fa-circle-exclamation mr-2"></i>
-          查無符合的地點，請更新您的篩選條件
+          查無符合的地點，請放寬您的篩選條件
         </div>
       )}
 
@@ -156,11 +156,11 @@ const Map = ({
           const icon = L.divIcon({
             className: '',
             html: `<div class="marker-icon-wrapper ${isPulsating ? 'marker-pulse' : ''}">
-                    <img src="/images/marker-icons/${feature.properties.category || 'default'}.svg" alt="Marker" width="40" height="50" />
+                    <img src="/images/marker-icons/${feature.properties.category || 'default'}.svg" alt="Marker" width="36" height="45" />
                   </div>`,
-            iconSize: [40, 50],
-            iconAnchor: [20, 50],
-            popupAnchor: [0, -50]
+            iconSize: [36, 45],
+            iconAnchor: [18, 45],
+            popupAnchor: [0, -45]
           });
 
           return (

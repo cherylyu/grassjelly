@@ -23,7 +23,7 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
     >
       <div className="location-overlay text-sm md:text-md">
         <div className="px-5 pt-5 pb-1 rounded-t-lg flex justify-between items-center">
-          <h3 className="text-base md:text-lg font-semibold text-gray-800">{feature.properties.name}</h3>
+          <h3 className="text-base md:text-lg font-semibold">{feature.properties.name}</h3>
           <button
             onClick={onClose}
             className="p-1 rounded-full hover:bg-gray-200 transition-colors cursor-pointer"
@@ -38,13 +38,13 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
 
         <div className="px-5 pt-1 pb-3">
           {feature.properties.description && (
-            <div className="mb-3 text-gray-700">
+            <div className="mb-3">
               {feature.properties.description.length > DESCRIPTION_CHAR_LIMIT && !expandedDescriptions[feature.properties.id] ? (
                 <>
                   {feature.properties.description.substring(0, DESCRIPTION_CHAR_LIMIT)}...
                   <a
                     href="#"
-                    className="text-emerald-600 hover:text-emerald-700 ml-1 font-medium"
+                    className="text-emerald-600 hover:text-emerald-700 ml-1 font-semibold"
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -60,7 +60,7 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
                   {feature.properties.description.length > DESCRIPTION_CHAR_LIMIT && (
                     <a
                       href="#"
-                      className="text-emerald-600 hover:text-emerald-700 ml-1 font-medium"
+                      className="text-emerald-600 hover:text-emerald-700 ml-1 font-semibold"
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -79,14 +79,14 @@ const LocationOverlay = ({ feature, isOpen, onClose }: LocationOverlayProps) => 
             {feature.properties.address && (
               <div className="flex items-center">
                 <i className="fa-solid fa-building text-center w-4 mr-2"></i>
-                <span className="text-gray-700">{feature.properties.address}</span>
+                <span>{feature.properties.address}</span>
               </div>
             )}
 
             {feature.properties.phone && (
               <div className="flex items-center">
                 <i className="fa-solid fa-phone text-center w-4 mr-2"></i>
-                <span className="text-gray-700">{feature.properties.phone}</span>
+                <span>{feature.properties.phone}</span>
               </div>
             )}
 

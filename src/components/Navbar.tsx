@@ -49,7 +49,7 @@ const Navbar = ({ currentView = 'filter', sidebarCollapsed = false, onToggleView
                      ${
             activeView === 'filter' && !sidebarCollapsed
               ? 'bg-[#00d5be33] text-emerald-600'
-              : 'hover:bg-slate-200 text-gray-700'
+              : 'hover:bg-slate-200'
           }`}
           onClick={() => handleViewToggle('filter')}
           aria-label="篩選"
@@ -63,7 +63,7 @@ const Navbar = ({ currentView = 'filter', sidebarCollapsed = false, onToggleView
             height={24}
             className="md:mb-2"
           />
-          <span className="text-xs font-medium hidden md:inline">篩選</span>
+          <span className="text-xs hidden md:inline">篩選</span>
         </button>
 
         <button
@@ -72,7 +72,7 @@ const Navbar = ({ currentView = 'filter', sidebarCollapsed = false, onToggleView
                      ${
             activeView === 'about' && !sidebarCollapsed
               ? 'bg-[#00d5be33] text-emerald-600'
-              : 'hover:bg-slate-200 text-gray-700'
+              : 'hover:bg-slate-200'
           }`}
           onClick={() => handleViewToggle('about')}
           aria-label="關於"
@@ -86,7 +86,7 @@ const Navbar = ({ currentView = 'filter', sidebarCollapsed = false, onToggleView
             height={24}
             className="md:mb-2"
           />
-          <span className="text-xs font-medium hidden md:inline">關於</span>
+          <span className="text-xs hidden md:inline">關於</span>
         </button>
       </div>
     </nav>

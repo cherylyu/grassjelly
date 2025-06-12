@@ -95,7 +95,7 @@ export default function Home() {
   }
 
   return (
-    <div className="w-screen h-screen overflow-hidden">
+    <div className="w-screen h-screen text-gray-700 overflow-hidden">
       <Navbar
         currentView={currentView}
         sidebarCollapsed={sidebarCollapsed}
