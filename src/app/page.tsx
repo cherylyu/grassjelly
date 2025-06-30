@@ -1,7 +1,8 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
 import LoadingSpinner from '@/components/LoadingSpinner';
@@ -16,59 +17,36 @@ const MapWithNoSSR = dynamic(
   }
 );
 
+const fetchLocations = async (): Promise<GeoJSONData> => {
+  const response = await fetch('/api/locations');
+  if (!response.ok) {
+    throw new Error(`取得地點資料時發生錯誤: ${response.status}`);
+  }
+  return response.json();
+};
+
+const fetchCategories = async (): Promise<Category[]> => {
+  const response = await fetch('/api/categories');
+  if (!response.ok) {
+    throw new Error(`取得類別資料時發生錯誤: ${response.status}`);
+  }
+  return response.json();
+};
+
 export default function Home() {
   const [currentView, setCurrentView] = useState<'filter' | 'about'>('filter');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>('all');
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [locations, setLocations] = useState<GeoJSONData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchLocations = async () => {
-      try {
-        const response = await fetch('/api/locations');
+  const locationsQuery = useQuery({
+    queryKey: ['locations'],
+    queryFn: fetchLocations
+  });
 
-        if (!response.ok) {
-          throw new Error(`取得地點資料時發生錯誤: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setLocations(data as GeoJSONData);
-      } catch (err) {
-        console.error('取得地點資料失敗:', err);
-        setError(err instanceof Error ? err.message : '取得地點資料時發生未知錯誤');
-      }
-    };
-
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch('/api/categories');
-
-        if (!response.ok) {
-          throw new Error(`取得類別資料時發生錯誤: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setCategories(data as Category[]);
-      } catch (err) {
-        console.error('取得類別資料失敗:', err);
-        setError(err instanceof Error ? err.message : '取得類別資料時發生未知錯誤');
-      }
-    };
-
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        await Promise.all([fetchLocations(), fetchCategories()]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const categoriesQuery = useQuery({
+    queryKey: ['categories'],
+    queryFn: fetchCategories
+  });
 
   const handleToggleView = (view: 'filter' | 'about') => {
     setCurrentView(view);
@@ -82,12 +60,16 @@ export default function Home() {
     setSelectedCategory(categoryId);
   };
 
+  const isLoading = locationsQuery.isLoading || categoriesQuery.isLoading;
+  const error = locationsQuery.error || categoriesQuery.error;
+  const errorMessage = error instanceof Error ? error.message : '取得資料時發生未知錯誤';
+
   if (isLoading) {
     return <div className="w-full h-full min-h-screen flex items-center justify-center bg-white"><LoadingSpinner /></div>;
   }
 
   if (error) {
-    return <div className="w-full h-full min-h-screen flex items-center justify-center bg-red-100 text-red-500">{error}</div>;
+    return <div className="w-full h-full min-h-screen flex items-center justify-center bg-red-100 text-red-500">{errorMessage}</div>;
   }
 
   return (
@@ -102,13 +84,13 @@ export default function Home() {
         <MapWithNoSSR
           center={[25.011905, 121.216255]}
           zoom={16}
-          locations={locations}
-          categories={categories}
+          locations={locationsQuery.data}
+          categories={categoriesQuery.data || []}
           selectedCategory={selectedCategory}
         />
         <Sidebar
           currentView={currentView}
-          categories={categories}
+          categories={categoriesQuery.data || []}
           selectedCategory={selectedCategory}
           onCategorySelect={handleCategorySelect}
           collapsed={sidebarCollapsed}

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { Viewport } from 'next';
 import { Noto_Sans_TC } from 'next/font/google';
+import TanstackProvider from '@/lib/queryClient';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './globals.css';
 
@@ -68,7 +69,9 @@ export default function RootLayout({
       <body
         className={`${notoSansTC.className} antialiased`}
       >
-        {children}
+        <TanstackProvider>
+          {children}
+        </TanstackProvider>
       </body>
     </html>
   );
