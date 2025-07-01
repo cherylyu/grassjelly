@@ -51,9 +51,11 @@ const SearchBox = ({
     return null;
   };
 
-  const searchHints = filteredLocations?.filter(location =>
-    location.properties.name.toLowerCase().includes(searchTerm.toLowerCase())
-  ) || [];
+  const searchHints = searchTerm.length === 0 && showResults
+    ? filteredLocations || []
+    : filteredLocations?.filter(location =>
+        location.properties.name.toLowerCase().includes(searchTerm.toLowerCase())
+      ) || [];
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -70,7 +72,7 @@ const SearchBox = ({
   const handleSearchFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Pre-select the input box for quicker text modification
     e.target.select();
-    setShowResults(e.target.value.length > 0);
+    setShowResults(true);
   };
 
   const handleSelectLocation = (location: GeoJSONFeature) => {
