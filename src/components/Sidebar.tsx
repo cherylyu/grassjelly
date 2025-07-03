@@ -2,9 +2,18 @@
 
 import { useState } from 'react';
 import { SidebarProps, Category } from '@/interfaces';
+import { useAppStore } from '@/store/useAppStore';
 import Image from 'next/image';
 
-const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selectedCategory, collapsed = false, onCollapseStateChange }: SidebarProps) => {
+const Sidebar = ({ categories }: SidebarProps) => {
+  const {
+    currentView,
+    sidebarCollapsed,
+    selectedCategory,
+    setSelectedCategory,
+    toggleSidebar
+  } = useAppStore();
+
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
 
   const toggleCategory = (categoryId: string) => {
@@ -12,18 +21,6 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
       setExpandedCategories(expandedCategories.filter(id => id !== categoryId));
     } else {
       setExpandedCategories([...expandedCategories, categoryId]);
-    }
-  };
-
-  const handleCategorySelect = (categoryId: string | null) => {
-    if (onCategorySelect) {
-      onCategorySelect(selectedCategory === categoryId ? null : categoryId);
-    }
-  };
-
-  const handleCollapseToggle = () => {
-    if (onCollapseStateChange) {
-      onCollapseStateChange(!collapsed);
     }
   };
 
@@ -49,7 +46,7 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
           className={`flex items-center py-2 cursor-pointer hover:bg-slate-100 ${
             isSelected ? 'bg-slate-100' : ''
           }`}
-          onClick={() => handleCategorySelect(category.id)}
+          onClick={() => setSelectedCategory(category.id)}
         >
           <div className="flex items-center" style={iconStyle}>
             {hasSubcategories ? (
@@ -88,11 +85,11 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
     <div
       className={`sidebar fixed top-[70px] md:top-0 left-0 md:left-[90px] w-full md:w-[300px] h-1/2 md:h-full
                   p-4 bg-white z-700 transition-all duration-600 ease-in-out overflow-y-auto md:overflow-visible
-                 ${collapsed ? 'transform -translate-y-[100vh] md:translate-y-0 md:-translate-x-[300px]' : ''}`}
+                 ${sidebarCollapsed ? 'transform -translate-y-[100vh] md:translate-y-0 md:-translate-x-[300px]' : ''}`}
     >
       {/* Close button for small screens */}
       <button
-        onClick={handleCollapseToggle}
+        onClick={toggleSidebar}
         className="md:hidden absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 rounded-full"
         aria-label="關閉側邊欄"
       >
@@ -112,7 +109,7 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
                 className={`flex items-center py-2 cursor-pointer hover:bg-slate-100 ${
                   selectedCategory === 'all' ? 'bg-slate-100' : ''
                 }`}
-                onClick={() => handleCategorySelect('all')}
+                onClick={() => setSelectedCategory('all')}
               >
                 <span className="mx-1"></span>
                 <div className={`w-5 h-5 mr-2 flex-shrink-0 rounded-full radio bg-slate-400 ${selectedCategory === 'all' ? 'checked' : ''}`}></div>
@@ -149,11 +146,11 @@ const Sidebar = ({ currentView = 'filter', categories, onCategorySelect, selecte
 
       {/* Collapse button for large screens */}
       <button
-        onClick={handleCollapseToggle}
+        onClick={toggleSidebar}
         className={`btn-collapse md:absolute top-1/2 -right-6 w-6 h-12 hidden md:flex items-center justify-center transition-transform cursor-pointer ${
-          collapsed ? 'rotate-180 collapsed' : 'bg-white rounded-r-md expanded'
+          sidebarCollapsed ? 'rotate-180 collapsed' : 'bg-white rounded-r-md expanded'
         }`}
-        aria-label={collapsed ? '展開側邊欄' : '收合側邊欄'}
+        aria-label={sidebarCollapsed ? '展開側邊欄' : '收合側邊欄'}
       >
         <Image
           src="/images/slide-arrow.svg"

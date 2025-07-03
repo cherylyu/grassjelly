@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, Marker, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { GeoJSONFeature, MapProps, Category } from '@/interfaces';
+import { useAppStore } from '@/store/useAppStore';
 import LocationOverlay from './LocationOverlay';
 import SearchBox from './SearchBox';
 import './common.css';
@@ -14,9 +15,10 @@ const Map = ({
   center,
   zoom,
   locations,
-  categories,
-  selectedCategory
+  categories
 }: MapProps) => {
+  const { selectedCategory } = useAppStore();
+
   const [selectedFeature, setSelectedFeature] = useState<GeoJSONFeature | null>(null);
   const [searchedFeature, setSearchedFeature] = useState<GeoJSONFeature | null>(null); // eslint-disable-line @typescript-eslint/no-unused-vars
   const [pulsatingMarkerId, setPulsatingMarkerId] = useState<string | null>(null);

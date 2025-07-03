@@ -33,12 +33,7 @@ export interface MapProps {
 
 // Sidebar component interfaces
 export interface SidebarProps {
-  currentView?: 'filter' | 'about';
   categories: Category[];
-  selectedCategory: string | null;
-  onCategorySelect: (categoryId: string | null) => void;
-  collapsed: boolean;
-  onCollapseStateChange?: (collapsed: boolean) => void;
 }
 
 // Category interfaces
@@ -55,12 +50,4 @@ export interface SearchBoxProps {
   categories?: Category[];
   selectedCategory?: string | null;
   onSelectLocation: (feature: GeoJSONFeature) => void;
-}
-
-// Navbar component interfaces
-export interface NavbarProps {
-  currentView?: 'filter' | 'about';
-  sidebarCollapsed: boolean;
-  onToggleView?: (view: 'filter' | 'about') => void;
-  onToggleSidebar?: (collapsed: boolean) => void;
 }

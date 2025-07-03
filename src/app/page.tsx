@@ -1,7 +1,6 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
@@ -34,10 +33,6 @@ const fetchCategories = async (): Promise<Category[]> => {
 };
 
 export default function Home() {
-  const [currentView, setCurrentView] = useState<'filter' | 'about'>('filter');
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>('all');
-
   const locationsQuery = useQuery({
     queryKey: ['locations'],
     queryFn: fetchLocations
@@ -47,18 +42,6 @@ export default function Home() {
     queryKey: ['categories'],
     queryFn: fetchCategories
   });
-
-  const handleToggleView = (view: 'filter' | 'about') => {
-    setCurrentView(view);
-  };
-
-  const handleToggleSidebar = (collapsed: boolean) => {
-    setSidebarCollapsed(collapsed);
-  };
-
-  const handleCategorySelect = (categoryId: string | null) => {
-    setSelectedCategory(categoryId);
-  };
 
   const isLoading = locationsQuery.isLoading || categoriesQuery.isLoading;
   const error = locationsQuery.error || categoriesQuery.error;
@@ -74,27 +57,16 @@ export default function Home() {
 
   return (
     <div className="w-screen h-screen text-gray-700 overflow-hidden">
-      <Navbar
-        currentView={currentView}
-        sidebarCollapsed={sidebarCollapsed}
-        onToggleView={handleToggleView}
-        onToggleSidebar={handleToggleSidebar}
-      />
+      <Navbar />
       <div className="w-full h-full pt-[70px] md:pt-0 md:pl-[90px]">
         <MapWithNoSSR
           center={[25.011905, 121.216255]}
           zoom={16}
           locations={locationsQuery.data}
           categories={categoriesQuery.data || []}
-          selectedCategory={selectedCategory}
         />
         <Sidebar
-          currentView={currentView}
           categories={categoriesQuery.data || []}
-          selectedCategory={selectedCategory}
-          onCategorySelect={handleCategorySelect}
-          collapsed={sidebarCollapsed}
-          onCollapseStateChange={handleToggleSidebar}
         />
       </div>
     </div>

@@ -1,28 +1,23 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { NavbarProps } from '@/interfaces';
+import { useAppStore } from '@/store/useAppStore';
 
-const Navbar = ({ currentView = 'filter', sidebarCollapsed = false, onToggleView, onToggleSidebar }: NavbarProps) => {
-  const [activeView, setActiveView] = useState<'filter' | 'about'>(currentView);
-
-  useEffect(() => {
-    setActiveView(currentView);
-  }, [currentView]);
+const Navbar = () => {
+  const {
+    currentView,
+    sidebarCollapsed,
+    setCurrentView,
+    toggleSidebar
+  } = useAppStore();
 
   const handleViewToggle = (view: 'filter' | 'about') => {
-    if (activeView === view && !sidebarCollapsed) {
-      if (onToggleSidebar) {
-        onToggleSidebar(true);
-      }
+    if (currentView === view && !sidebarCollapsed) {
+      toggleSidebar();
     } else {
-      setActiveView(view);
-      if (onToggleView) {
-        onToggleView(view);
-      }
-      if (sidebarCollapsed && onToggleSidebar) {
-        onToggleSidebar(false);
+      setCurrentView(view);
+      if (sidebarCollapsed) {
+        toggleSidebar();
       }
     }
   };
@@ -47,7 +42,7 @@ const Navbar = ({ currentView = 'filter', sidebarCollapsed = false, onToggleView
           className={`flex flex-row md:flex-col items-center justify-center cursor-pointer rounded-md
                       w-10 md:w-16 h-10 md:h-16 mr-2 md:mr-0 md:mb-4 p-2 transition-all duration-200
                      ${
-            activeView === 'filter' && !sidebarCollapsed
+            currentView === 'filter' && !sidebarCollapsed
               ? 'bg-[#00d5be33] text-emerald-600'
               : 'hover:bg-slate-200'
           }`}
@@ -56,7 +51,7 @@ const Navbar = ({ currentView = 'filter', sidebarCollapsed = false, onToggleView
         >
           <Image
             src={`/images/filter${
-              activeView === 'filter' && !sidebarCollapsed ? '-active' : ''
+              currentView === 'filter' && !sidebarCollapsed ? '-active' : ''
             }.svg`}
             alt="篩選"
             width={24}
@@ -70,7 +65,7 @@ const Navbar = ({ currentView = 'filter', sidebarCollapsed = false, onToggleView
           className={`flex flex-row md:flex-col items-center justify-center cursor-pointer rounded-md
                       w-10 md:w-16 h-10 md:h-16 mr-2 md:mr-0 md:mb-4 p-2 transition-all duration-200
                      ${
-            activeView === 'about' && !sidebarCollapsed
+            currentView === 'about' && !sidebarCollapsed
               ? 'bg-[#00d5be33] text-emerald-600'
               : 'hover:bg-slate-200'
           }`}
@@ -79,7 +74,7 @@ const Navbar = ({ currentView = 'filter', sidebarCollapsed = false, onToggleView
         >
           <Image
             src={`/images/info${
-              activeView === 'about' && !sidebarCollapsed ? '-active' : ''
+              currentView === 'about' && !sidebarCollapsed ? '-active' : ''
             }.svg`}
             alt="關於"
             width={24}
