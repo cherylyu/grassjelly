@@ -19,7 +19,9 @@ Visit the live application at [Lohas in Qingpu](https://lohas-in-qingpu.vercel.a
 - **Frontend**: Next.js, React, TypeScript
 - **Styling**: Tailwind CSS
 - **Map Integration**: Leaflet, OpenStreetMap
-- **Database**: MongoDB for storing location and category data
+- **State Management**: Zustand
+- **Data Fetching**: TanStack Query
+- **Database**: MongoDB
 - **Deployment**: Vercel
 
 ## Setup

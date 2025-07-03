@@ -23,7 +23,7 @@ const Map = ({
   const [searchedFeature, setSearchedFeature] = useState<GeoJSONFeature | null>(null); // eslint-disable-line @typescript-eslint/no-unused-vars
   const [pulsatingMarkerId, setPulsatingMarkerId] = useState<string | null>(null);
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
-  const [filteredLocations, setfilteredLocations] = useState<GeoJSONFeature[]>([]);
+  const [filteredLocations, setFilteredLocations] = useState<GeoJSONFeature[]>([]);
   const mapRef = useRef<L.Map | null>(null);
   const markerRefs = useRef<Record<string, L.Marker | null>>({});
 
@@ -32,7 +32,7 @@ const Map = ({
       const filtered = locations.features.filter(feature =>
         isInSelectedCategory(feature.properties.category, selectedCategory || '')
       );
-      setfilteredLocations(filtered);
+      setFilteredLocations(filtered);
 
       setPulsatingMarkerId(null);
       setIsOverlayOpen(false);
